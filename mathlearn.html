@@ -1,0 +1,2551 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathLearn - Học Toán Thông Minh</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { 
+            font-family: 'Be Vietnam Pro', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.6;
+            text-rendering: optimizeLegibility;
+        }
+        
+        /* Cải thiện hiển thị tiếng Việt */
+        .vietnamese-text {
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            font-variant-ligatures: normal;
+        }
+        
+        /* Đảm bảo font hiển thị đúng trên mọi thiết bị */
+        * {
+            -webkit-font-feature-settings: "kern" 1, "liga" 1;
+            font-feature-settings: "kern" 1, "liga" 1;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+        
+        /* Tối ưu cho tiếng Việt */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            font-weight: 600;
+        }
+        
+        p, span, div, button, input, textarea {
+            font-family: 'Be Vietnam Pro', sans-serif;
+        }
+        .gradient-bg { background: linear-gradient(135deg, #FFB6C1 0%, #FFC0CB 100%); }
+        .card-hover { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .nav-item { transition: all 0.3s ease; }
+        .nav-item:hover { background-color: rgba(255,255,255,0.1); }
+        .active-nav { background-color: rgba(255,255,255,0.2); }
+        .section { display: none; }
+        .section.active { display: block; }
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+    </style>
+</head>
+<body style="background-color: #FFF0F5;">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="text-4xl">🧮</div>
+                    <h1 class="text-2xl font-bold">MathLearn</h1>
+                </div>
+                
+                <!-- Navigation Menu -->
+                <nav class="hidden md:flex space-x-2">
+                    <button onclick="showSection('home')" class="nav-item px-4 py-2 rounded-lg font-medium active-nav" id="nav-home">
+                        🏠 Trang chủ
+                    </button>
+                    <button onclick="showSection('lessons')" class="nav-item px-4 py-2 rounded-lg font-medium" id="nav-lessons">
+                        📖 Học bài
+                    </button>
+                    <button onclick="showSection('exams')" class="nav-item px-4 py-2 rounded-lg font-medium" id="nav-exams">
+                        📚 Kho đề thi
+                    </button>
+                    <button onclick="showSection('practice')" class="nav-item px-4 py-2 rounded-lg font-medium" id="nav-practice">
+                        ✏️ Luyện tập
+                    </button>
+                    <button onclick="showSection('ai')" class="nav-item px-4 py-2 rounded-lg font-medium" id="nav-ai">
+                        🤖 Hỏi AI
+                    </button>
+                    <button onclick="showSection('contact')" class="nav-item px-4 py-2 rounded-lg font-medium" id="nav-contact">
+                        📞 Liên hệ
+                    </button>
+                </nav>
+                
+                <button class="bg-white text-pink-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                    Đăng nhập
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="md:hidden bg-pink-400 text-white">
+        <div class="container mx-auto px-6 py-2">
+            <div class="grid grid-cols-6 gap-1 text-center text-xs">
+                <button onclick="showSection('home')" class="py-2 rounded active-nav" id="mobile-nav-home">
+                    <div>🏠</div>
+                    <div>Trang chủ</div>
+                </button>
+                <button onclick="showSection('lessons')" class="py-2 rounded" id="mobile-nav-lessons">
+                    <div>📖</div>
+                    <div>Học bài</div>
+                </button>
+                <button onclick="showSection('exams')" class="py-2 rounded" id="mobile-nav-exams">
+                    <div>📚</div>
+                    <div>Kho đề</div>
+                </button>
+                <button onclick="showSection('practice')" class="py-2 rounded" id="mobile-nav-practice">
+                    <div>✏️</div>
+                    <div>Luyện tập</div>
+                </button>
+                <button onclick="showSection('ai')" class="py-2 rounded" id="mobile-nav-ai">
+                    <div>🤖</div>
+                    <div>Hỏi AI</div>
+                </button>
+                <button onclick="showSection('contact')" class="py-2 rounded" id="mobile-nav-contact">
+                    <div>📞</div>
+                    <div>Liên hệ</div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Home Section -->
+    <section id="home" class="section active">
+        <!-- Hero Section -->
+        <div class="gradient-bg text-white py-20">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-5xl font-bold mb-6 vietnamese-text">Học Toán Dễ Dàng Cùng MathLearn</h2>
+                <p class="text-xl mb-8 max-w-2xl mx-auto vietnamese-text">Khám phá kho đề thi phong phú, luyện tập tương tác và được hỗ trợ bởi AI thông minh</p>
+                <button onclick="showSection('lessons')" class="bg-white text-pink-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-colors transform hover:scale-105">
+                    Bắt đầu học bài
+                </button>
+            </div>
+        </div>
+
+        <!-- Features Grid -->
+        <div class="py-16">
+            <div class="container mx-auto px-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="text-center p-6 bg-white rounded-xl card-hover cursor-pointer" onclick="showSection('lessons')">
+                        <div class="text-5xl mb-4">📖</div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Học Bài</h3>
+                        <p class="text-gray-600">Tóm tắt lý thuyết, sơ đồ tư duy và video bài giảng</p>
+                    </div>
+                    <div class="text-center p-6 bg-white rounded-xl card-hover cursor-pointer" onclick="showSection('exams')">
+                        <div class="text-5xl mb-4">📚</div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Kho Đề Thi</h3>
+                        <p class="text-gray-600">Đề thi theo chủ đề và ôn tập chuyên đề</p>
+                    </div>
+                    <div class="text-center p-6 bg-white rounded-xl card-hover cursor-pointer" onclick="showSection('practice')">
+                        <div class="text-5xl mb-4">✏️</div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Luyện Tập</h3>
+                        <p class="text-gray-600">Bài tập theo 4 chủ đề chính</p>
+                    </div>
+                    <div class="text-center p-6 bg-white rounded-xl card-hover cursor-pointer" onclick="showSection('ai')">
+                        <div class="text-5xl mb-4">🤖</div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Hỏi AI</h3>
+                        <p class="text-gray-600">Trợ lý AI thông minh giải đáp mọi thắc mắc</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="py-16 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-bold text-gray-800 mb-4">Thành Tích Ấn Tượng</h2>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                    <div class="p-6">
+                        <div class="text-4xl text-pink-400 mb-4">👥</div>
+                        <h3 class="text-3xl font-bold text-gray-800 mb-2">50,000+</h3>
+                        <p class="text-gray-600">Học sinh</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-4xl text-pink-400 mb-4">📝</div>
+                        <h3 class="text-3xl font-bold text-gray-800 mb-2">10,000+</h3>
+                        <p class="text-gray-600">Đề thi</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-4xl text-pink-400 mb-4">🎯</div>
+                        <h3 class="text-3xl font-bold text-gray-800 mb-2">95%</h3>
+                        <p class="text-gray-600">Độ chính xác AI</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-4xl text-pink-400 mb-4">⭐</div>
+                        <h3 class="text-3xl font-bold text-gray-800 mb-2">4.9/5</h3>
+                        <p class="text-gray-600">Đánh giá</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Học Bài Section -->
+    <section id="lessons" class="section py-16">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">📖 Học Bài</h2>
+                <p class="text-xl text-gray-600">Tài liệu học tập đầy đủ và chi tiết</p>
+            </div>
+
+            <!-- Lesson Categories -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div class="bg-white rounded-xl shadow-lg p-6 card-hover cursor-pointer" onclick="showLessonContent('theory')">
+                    <div class="text-center">
+                        <div class="text-5xl mb-4">📝</div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Tóm Tắt Lý Thuyết</h3>
+                        <p class="text-gray-600 mb-4">Kiến thức cốt lõi được tóm tắt ngắn gọn, dễ hiểu</p>
+                        <button class="bg-pink-200 text-pink-700 px-6 py-2 rounded-lg hover:bg-pink-300 transition-colors">
+                            Xem ngay
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-6 card-hover cursor-pointer" onclick="showLessonContent('mindmap')">
+                    <div class="text-center">
+                        <div class="text-5xl mb-4">🧠</div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Sơ Đồ Tư Duy</h3>
+                        <p class="text-gray-600 mb-4">Sơ đồ trực quan giúp ghi nhớ kiến thức hiệu quả</p>
+                        <button class="bg-pink-200 text-pink-700 px-6 py-2 rounded-lg hover:bg-pink-300 transition-colors">
+                            Xem ngay
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-6 card-hover cursor-pointer" onclick="showLessonContent('video')">
+                    <div class="text-center">
+                        <div class="text-5xl mb-4">🎥</div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Video Bài Giảng</h3>
+                        <p class="text-gray-600 mb-4">Video giảng dạy sinh động từ giáo viên kinh nghiệm</p>
+                        <button class="bg-pink-200 text-pink-700 px-6 py-2 rounded-lg hover:bg-pink-300 transition-colors">
+                            Xem ngay
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lesson Content Display -->
+            <div id="lesson-content" class="bg-white rounded-xl shadow-lg p-8" style="display: none;">
+                <!-- Theory Content -->
+                <div id="theory-content" class="lesson-content-item" style="display: none;">
+                    <h3 class="text-2xl font-bold mb-6 text-center">📝 Tóm Tắt Lý Thuyết</h3>
+                    
+                    <!-- Theory Topics Grid -->
+                    <div id="theory-topics" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-blue-50 p-6 rounded-lg card-hover cursor-pointer" onclick="showTheoryDetail('chapter1')">
+                            <h4 class="text-xl font-bold mb-4 text-blue-800">Chủ đề 1: Hàm Số</h4>
+                            <ul class="space-y-2 text-gray-700">
+                                <li>• Khái niệm hàm số</li>
+                                <li>• Tập xác định, tập giá trị</li>
+                                <li>• Đồ thị hàm số</li>
+                                <li>• Tính chất hàm số</li>
+                            </ul>
+                            <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Chi tiết</button>
+                        </div>
+                        <div class="bg-green-50 p-6 rounded-lg card-hover cursor-pointer" onclick="showTheoryDetail('chapter2')">
+                            <h4 class="text-xl font-bold mb-4 text-green-800">Chủ đề 2: Hàm Số Bậc Hai</h4>
+                            <ul class="space-y-2 text-gray-700">
+                                <li>• Dạng tổng quát y = ax² + bx + c</li>
+                                <li>• Đồ thị parabol</li>
+                                <li>• Tính chất hàm bậc hai</li>
+                                <li>• Ứng dụng thực tế</li>
+                            </ul>
+                            <button class="mt-4 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">Chi tiết</button>
+                        </div>
+                        <div class="bg-purple-50 p-6 rounded-lg card-hover cursor-pointer" onclick="showTheoryDetail('chapter3')">
+                            <h4 class="text-xl font-bold mb-4 text-purple-800">Chủ đề 3: Dấu Tam Thức Bậc Hai</h4>
+                            <ul class="space-y-2 text-gray-700">
+                                <li>• Tam thức bậc hai f(x) = ax² + bx + c</li>
+                                <li>• Biệt thức và nghiệm</li>
+                                <li>• Bảng xét dấu</li>
+                                <li>• Ứng dụng giải bất phương trình</li>
+                            </ul>
+                            <button class="mt-4 bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600">Chi tiết</button>
+                        </div>
+                        <div class="bg-red-50 p-6 rounded-lg card-hover cursor-pointer" onclick="showTheoryDetail('chapter4')">
+                            <h4 class="text-xl font-bold mb-4 text-red-800">Chủ đề 4: PT Quy Về PT Bậc Hai</h4>
+                            <ul class="space-y-2 text-gray-700">
+                                <li>• Phương trình chứa ẩn ở mẫu</li>
+                                <li>• Phương trình chứa căn thức</li>
+                                <li>• Phương trình tích</li>
+                                <li>• Phương trình đặt ẩn phụ</li>
+                            </ul>
+                            <button class="mt-4 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">Chi tiết</button>
+                        </div>
+                    </div>
+
+                    <!-- Detailed Theory Content -->
+                    <div id="theory-detail" style="display: none;">
+                        <div class="mb-4">
+                            <button onclick="backToTheoryTopics()" class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600">
+                                ← Quay lại
+                            </button>
+                        </div>
+
+                        <!-- Chapter 1 Detail -->
+                        <div id="chapter1-detail" class="theory-detail-content" style="display: none;">
+                            <div class="bg-blue-50 rounded-xl p-8">
+                                <h3 class="text-3xl font-bold text-blue-800 mb-6 text-center">📊 Chủ đề 1: Hàm Số</h3>
+                                
+                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                    <div class="bg-white p-6 rounded-lg shadow-md">
+                                        <h4 class="text-xl font-bold text-blue-700 mb-4">1. Khái niệm hàm số</h4>
+                                        <div class="space-y-3 text-gray-700">
+                                            <p><strong>Định nghĩa:</strong> Hàm số f từ tập A đến tập B là quy tắc đặt tương ứng mỗi phần tử x ∈ A với duy nhất một phần tử y ∈ B</p>
+                                            <p><strong>Ký hiệu:</strong> y = f(x) hoặc f: A → B</p>
+                                            <div class="bg-blue-100 p-3 rounded">
+                                                <p><strong>Biến số:</strong> x gọi là biến độc lập</p>
+                                                <p><strong>Hàm số:</strong> y gọi là biến phụ thuộc</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-white p-6 rounded-lg shadow-md">
+                                        <h4 class="text-xl font-bold text-blue-700 mb-4">2. Tập xác định</h4>
+                                        <div class="space-y-3 text-gray-700">
+                                            <p><strong>Định nghĩa:</strong> Tập xác định D của hàm số y = f(x) là tập hợp tất cả các giá trị của x để f(x) có nghĩa</p>
+                                            <div class="bg-blue-100 p-3 rounded">
+                                                <p><strong>Các trường hợp:</strong></p>
+                                                <p>• Hàm đa thức: D = ℝ</p>
+                                                <p>• Hàm phân thức: D = ℝ \ {nghiệm mẫu}</p>
+                                                <p>• Hàm căn: D = {x | biểu thức dưới căn ≥ 0}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-white p-6 rounded-lg shadow-md">
+                                        <h4 class="text-xl font-bold text-blue-700 mb-4">3. Đồ thị hàm số</h4>
+                                        <div class="space-y-3 text-gray-700">
+                                            <p><strong>Định nghĩa:</strong> Đồ thị hàm số y = f(x) là tập hợp các điểm M(x; f(x)) trong mặt phẳng tọa độ</p>
+                                            <div class="bg-blue-100 p-3 rounded">
+                                                <p><strong>Cách vẽ đồ thị:</strong></p>
+                                                <p>1. Tìm tập xác định</p>
+                                                <p>2. Lập bảng giá trị</p>
+                                                <p>3. Vẽ các điểm và nối lại</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-white p-6 rounded-lg shadow-md">
+                                        <h4 class="text-xl font-bold text-blue-700 mb-4">4. Tính chất hàm số</h4>
+                                        <div class="space-y-3 text-gray-700">
+                                            <p><strong>Tính đơn điệu:</strong></p>
+                                            <div class="bg-blue-100 p-3 rounded">
+                                                <p>• <strong>Đồng biến:</strong> x₁ < x₂ ⇒ f(x₁) < f(x₂)</p>
+                                                <p>• <strong>Nghịch biến:</strong> x₁ < x₂ ⇒ f(x₁) > f(x₂)</p>
+                                                <p>• <strong>Tính chẵn lẻ:</strong> f(-x) = f(x) (chẵn), f(-x) = -f(x) (lẻ)</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mt-8 bg-white p-6 rounded-lg shadow-md">
+                                    <h4 class="text-xl font-bold text-blue-700 mb-4">💡 Ví dụ minh họa</h4>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div class="bg-gray-50 p-4 rounded">
+                                            <p><strong>Ví dụ 1:</strong> Tìm TXĐ của y = √(x - 1)</p>
+                                            <p class="text-green-600">Giải: x - 1 ≥ 0 ⇒ x ≥ 1. Vậy D = [1; +∞)</p>
+                                        </div>
+                                        <div class="bg-gray-50 p-4 rounded">
+                                            <p><strong>Ví dụ 2:</strong> Tìm TXĐ của y = 1/(x² - 4)</p>
+                                            <p class="text-green-600">Giải: x² - 4 ≠ 0 ⇒ x ≠ ±2. Vậy D = ℝ \ {-2; 2}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chapter 2 Detail -->
+                        <div id="chapter2-detail" class="theory-detail-content" style="display: none;">
+                            <div class="bg-green-50 rounded-xl p-8">
+                                <h3 class="text-3xl font-bold text-green-800 mb-6 text-center">📈 Chương 2: Hàm Số</h3>
+                                
+                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                    <div class="bg-white p-6 rounded-lg shadow-md">
+                                        <h4 class="text-xl font-bold text-green-700 mb-4">1. Khái niệm hàm số</h4>
+                                        <div class="space-y-3 text-gray-700">
+                                            <p><strong>Định nghĩa:</strong> Hàm số f từ tập A đến tập B là quy tắc đặt tương ứng mỗi phần tử x ∈ A với duy nhất một phần tử y ∈ B</p>
+                                            <p><strong>Ký hiệu:</strong> y = f(x) hoặc f: A → B</p>
+                                            <div class="bg-green-100 p-3 rounded">
+                                                <p><strong>Tập xác định:</strong> D(f) = A</p>
+                                                <p><strong>Tập giá trị:</strong> T(f) ⊆ B</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-white p-6 rounded-lg shadow-md">
+                                        <h4 class="text-xl font-bold text-green-700 mb-4">2. Hàm số bậc nhất</h4>
+                                        <div class="space-y-3 text-gray-700">
+                                            <p><strong>Dạng tổng quát:</strong> y = ax + b (a ≠ 0)</p>
+                                            <p><strong>Tập xác định:</strong> D = ℝ</p>
+                                            <div class="bg-green-100 p-3 rounded">
+                                                <p><strong>Tính chất:</strong></p>
+                                                <p>• Đồng biến khi a > 0</p>
+                                                <p>• Nghịch biến khi a < 0</p>
+                                                <p>• Đồ thị là đường thẳng</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-white p-6 rounded-lg shadow-md">
+                                        <h4 class="text-xl font-bold text-green-700 mb-4">3. Hàm số bậc hai</h4>
+                                        <div class="space-y-3 text-gray-700">
+                                            <p><strong>Dạng tổng quát:</strong> y = ax² + bx + c (a ≠ 0)</p>
+                                            <p><strong>Tập xác định:</strong> D = ℝ</p>
+                                            <div class="bg-green-100 p-3 rounded">
+                                                <p><strong>Đỉnh parabol:</strong> x₀ = -b/2a</p>
+                                                <p><strong>Trục đối xứng:</strong> x = -b/2a</p>
+                                                <p><strong>Giá trị tại đỉnh:</strong> y₀ = -Δ/4a</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-white p-6 rounded-lg shadow-md">
+                                        <h4 class="text-xl font-bold text-green-700 mb-4">4. Đồ thị hàm số</h4>
+                                        <div class="space-y-3 text-gray-700">
+                                            <p><strong>Hàm bậc nhất:</strong> Đường thẳng</p>
+                                            <p><strong>Hàm bậc hai:</strong> Parabol</p>
+                                            <div class="bg-green-100 p-3 rounded">
+                                                <p><strong>Cách vẽ:</strong></p>
+                                                <p>1. Lập bảng giá trị</p>
+                                                <p>2. Xác định các điểm đặc biệt</p>
+                                                <p>3. Vẽ đồ thị</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mt-8 bg-white p-6 rounded-lg shadow-md">
+                                    <h4 class="text-xl font-bold text-green-700 mb-4">💡 Ví dụ minh họa</h4>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div class="bg-gray-50 p-4 rounded">
+                                            <p><strong>Ví dụ 1:</strong> Cho y = 2x + 3. Tính f(1), f(-2)</p>
+                                            <p class="text-green-600">Giải: f(1) = 2(1) + 3 = 5; f(-2) = 2(-2) + 3 = -1</p>
+                                        </div>
+                                        <div class="bg-gray-50 p-4 rounded">
+                                            <p><strong>Ví dụ 2:</strong> Tìm đỉnh parabol y = x² - 4x + 3</p>
+                                            <p class="text-green-600">Giải: x₀ = 4/2 = 2; y₀ = 4 - 8 + 3 = -1. Đỉnh I(2; -1)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chapter 3 Detail -->
+                        <div id="chapter3-detail" class="theory-detail-content" style="display: none;">
+                            <div class="bg-purple-50 rounded-xl p-8">
+                                <h3 class="text-3xl font-bold text-purple-800 mb-6 text-center">📉 Chủ đề 3: Dấu Của Tam Thức Bậc Hai</h3>
+                                
+                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                    <div class="bg-white p-6 rounded-lg shadow-md">
+                                        <h4 class="text-xl font-bold text-purple-700 mb-4">1. Tam thức bậc hai</h4>
+                                        <div class="space-y-3 text-gray-700">
+                                            <p><strong>Định nghĩa:</strong> Tam thức bậc hai là biểu thức có dạng f(x) = ax² + bx + c (a ≠ 0)</p>
+                                            <p><strong>Biệt thức:</strong> Δ = b² - 4ac</p>
+                                            <div class="bg-purple-100 p-3 rounded">
+                                                <p><strong>Nghiệm của tam thức:</strong></p>
+                                                <p>• Δ > 0: Có 2 nghiệm phân biệt</p>
+                                                <p>• Δ = 0: Có 1 nghiệm kép</p>
+                                                <p>• Δ < 0: Vô nghiệm</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-white p-6 rounded-lg shadow-md">
+                                        <h4 class="text-xl font-bold text-purple-700 mb-4">2. Dấu tam thức bậc hai</h4>
+                                        <div class="space-y-3 text-gray-700">
+                                            <p><strong>Quy tắc xét dấu:</strong> Dấu của tam thức phụ thuộc vào hệ số a và biệt thức Δ</p>
+                                            <div class="bg-purple-100 p-3 rounded">
+                                                <p><strong>Khi a > 0:</strong></p>
+                                                <p>• f(x) > 0 ngoài khoảng nghiệm</p>
+                                                <p>• f(x) < 0 trong khoảng nghiệm</p>
+                                                <p><strong>Khi a < 0:</strong> Ngược lại</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-white p-6 rounded-lg shadow-md">
+                                        <h4 class="text-xl font-bold text-purple-700 mb-4">3. Bảng xét dấu</h4>
+                                        <div class="space-y-3 text-gray-700">
+                                            <p><strong>Trường hợp Δ > 0:</strong> Có 2 nghiệm x₁ < x₂</p>
+                                            <div class="bg-purple-100 p-3 rounded">
+                                                <p><strong>Bảng xét dấu (a > 0):</strong></p>
+                                                <p>(-∞; x₁): f(x) cùng dấu a</p>
+                                                <p>(x₁; x₂): f(x) trái dấu a</p>
+                                                <p>(x₂; +∞): f(x) cùng dấu a</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-white p-6 rounded-lg shadow-md">
+                                        <h4 class="text-xl font-bold text-purple-700 mb-4">4. Ứng dụng</h4>
+                                        <div class="space-y-3 text-gray-700">
+                                            <p><strong>Giải bất phương trình:</strong></p>
+                                            <div class="bg-purple-100 p-3 rounded">
+                                                <p>• f(x) > 0: Lấy khoảng f(x) dương</p>
+                                                <p>• f(x) < 0: Lấy khoảng f(x) âm</p>
+                                                <p>• f(x) ≥ 0: Thêm nghiệm vào tập nghiệm</p>
+                                                <p>• f(x) ≤ 0: Thêm nghiệm vào tập nghiệm</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mt-8 bg-white p-6 rounded-lg shadow-md">
+                                    <h4 class="text-xl font-bold text-purple-700 mb-4">💡 Ví dụ minh họa</h4>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div class="bg-gray-50 p-4 rounded">
+                                            <p><strong>Ví dụ 1:</strong> Xét dấu f(x) = x² - 5x + 6</p>
+                                            <p class="text-purple-600">Giải: Δ = 1 > 0, x₁ = 2, x₂ = 3<br>f(x) > 0 khi x ∈ (-∞;2) ∪ (3;+∞)</p>
+                                        </div>
+                                        <div class="bg-gray-50 p-4 rounded">
+                                            <p><strong>Ví dụ 2:</strong> Giải BPT x² - 4x + 3 < 0</p>
+                                            <p class="text-purple-600">Giải: Nghiệm x₁ = 1, x₂ = 3<br>Nghiệm BPT: x ∈ (1; 3)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chapter 4 Detail -->
+                        <div id="chapter4-detail" class="theory-detail-content" style="display: none;">
+                            <div class="bg-red-50 rounded-xl p-8">
+                                <h3 class="text-3xl font-bold text-red-800 mb-6 text-center">🧮 Chủ đề 4: Phương Trình Quy Về Phương Trình Bậc Hai</h3>
+                                
+                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                    <div class="bg-white p-6 rounded-lg shadow-md">
+                                        <h4 class="text-xl font-bold text-red-700 mb-4">1. PT chứa ẩn ở mẫu</h4>
+                                        <div class="space-y-3 text-gray-700">
+                                            <p><strong>Dạng:</strong> P(x)/Q(x) = R(x)/S(x) hoặc P(x)/Q(x) = a</p>
+                                            <p><strong>Cách giải:</strong></p>
+                                            <div class="bg-red-100 p-3 rounded">
+                                                <p><strong>Bước 1:</strong> Tìm ĐKXĐ: Q(x) ≠ 0, S(x) ≠ 0</p>
+                                                <p><strong>Bước 2:</strong> Quy đồng mẫu và khử mẫu</p>
+                                                <p><strong>Bước 3:</strong> Giải PT thu được</p>
+                                                <p><strong>Bước 4:</strong> Kiểm tra ĐKXĐ</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-white p-6 rounded-lg shadow-md">
+                                        <h4 class="text-xl font-bold text-red-700 mb-4">2. PT chứa căn thức</h4>
+                                        <div class="space-y-3 text-gray-700">
+                                            <p><strong>Dạng:</strong> √f(x) = g(x) hoặc √f(x) = √g(x)</p>
+                                            <div class="bg-red-100 p-3 rounded">
+                                                <p><strong>Phương pháp:</strong></p>
+                                                <p>• Tìm ĐKXĐ: f(x) ≥ 0</p>
+                                                <p>• Bình phương hai vế</p>
+                                                <p>• Giải PT bậc hai thu được</p>
+                                                <p>• Kiểm tra nghiệm</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-white p-6 rounded-lg shadow-md">
+                                        <h4 class="text-xl font-bold text-red-700 mb-4">3. PT tích</h4>
+                                        <div class="space-y-3 text-gray-700">
+                                            <p><strong>Dạng:</strong> A(x) · B(x) = 0</p>
+                                            <div class="bg-red-100 p-3 rounded">
+                                                <p><strong>Nguyên lý:</strong></p>
+                                                <p>A(x) · B(x) = 0 ⇔ A(x) = 0 hoặc B(x) = 0</p>
+                                                <p><strong>Cách giải:</strong></p>
+                                                <p>• Giải A(x) = 0</p>
+                                                <p>• Giải B(x) = 0</p>
+                                                <p>• Hợp nghiệm</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-white p-6 rounded-lg shadow-md">
+                                        <h4 class="text-xl font-bold text-red-700 mb-4">4. PT đặt ẩn phụ</h4>
+                                        <div class="space-y-3 text-gray-700">
+                                            <p><strong>Dạng:</strong> PT có thể đưa về dạng at² + bt + c = 0</p>
+                                            <div class="bg-red-100 p-3 rounded">
+                                                <p><strong>Các dạng thường gặp:</strong></p>
+                                                <p>• ax⁴ + bx² + c = 0 (đặt t = x²)</p>
+                                                <p>• a(x + 1/x)² + b(x + 1/x) + c = 0</p>
+                                                <p>• PT chứa √x và x</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mt-8 bg-white p-6 rounded-lg shadow-md">
+                                    <h4 class="text-xl font-bold text-red-700 mb-4">💡 Ví dụ minh họa</h4>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div class="bg-gray-50 p-4 rounded">
+                                            <p><strong>Ví dụ 1:</strong> Giải (x-1)/(x+2) = 3</p>
+                                            <p class="text-red-600">Giải: ĐKXĐ: x ≠ -2<br>x - 1 = 3(x + 2) ⇒ x = -3.5</p>
+                                        </div>
+                                        <div class="bg-gray-50 p-4 rounded">
+                                            <p><strong>Ví dụ 2:</strong> Giải x⁴ - 5x² + 4 = 0</p>
+                                            <p class="text-red-600">Giải: Đặt t = x² (t ≥ 0)<br>t² - 5t + 4 = 0 ⇒ t = 1, t = 4<br>⇒ x = ±1, x = ±2</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mind Map Content -->
+                <div id="mindmap-content" class="lesson-content-item" style="display: none;">
+                    <h3 class="text-2xl font-bold mb-6 text-center">🧠 Sơ Đồ Tư Duy</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-gradient-to-br from-blue-100 to-blue-200 p-6 rounded-lg text-center card-hover cursor-pointer" onclick="showMindmapDetail('topic1')">
+                            <h4 class="text-xl font-bold mb-4 text-blue-800">Chủ đề 1: Hàm Số</h4>
+                            <div class="bg-white p-4 rounded-lg mb-4">
+                                <div class="text-sm text-gray-600">
+                                    <div class="font-bold text-blue-600 mb-2">HÀM SỐ</div>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <div>Khái niệm</div>
+                                        <div>Tập xác định</div>
+                                        <div>Đồ thị</div>
+                                        <div>Tính chất</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Xem chi tiết</button>
+                        </div>
+                        <div class="bg-gradient-to-br from-green-100 to-green-200 p-6 rounded-lg text-center card-hover cursor-pointer" onclick="showMindmapDetail('topic2')">
+                            <h4 class="text-xl font-bold mb-4 text-green-800">Chủ đề 2: Hàm Số Bậc Hai</h4>
+                            <div class="bg-white p-4 rounded-lg mb-4">
+                                <div class="text-sm text-gray-600">
+                                    <div class="font-bold text-green-600 mb-2">HÀM BẬC HAI</div>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <div>Dạng tổng quát</div>
+                                        <div>Parabol</div>
+                                        <div>Đỉnh</div>
+                                        <div>Ứng dụng</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">Xem chi tiết</button>
+                        </div>
+                        <div class="bg-gradient-to-br from-purple-100 to-purple-200 p-6 rounded-lg text-center card-hover cursor-pointer" onclick="showMindmapDetail('topic3')">
+                            <h4 class="text-xl font-bold mb-4 text-purple-800">Chủ đề 3: Dấu Tam Thức Bậc Hai</h4>
+                            <div class="bg-white p-4 rounded-lg mb-4">
+                                <div class="text-sm text-gray-600">
+                                    <div class="font-bold text-purple-600 mb-2">TAM THỨC BẬC HAI</div>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <div>Biệt thức Δ</div>
+                                        <div>Bảng xét dấu</div>
+                                        <div>Nghiệm</div>
+                                        <div>Bất phương trình</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600">Xem chi tiết</button>
+                        </div>
+                        <div class="bg-gradient-to-br from-red-100 to-red-200 p-6 rounded-lg text-center card-hover cursor-pointer" onclick="showMindmapDetail('topic4')">
+                            <h4 class="text-xl font-bold mb-4 text-red-800">Chủ đề 4: PT Quy Về PT Bậc Hai</h4>
+                            <div class="bg-white p-4 rounded-lg mb-4">
+                                <div class="text-sm text-gray-600">
+                                    <div class="font-bold text-red-600 mb-2">PT QUY VỀ BẬC HAI</div>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <div>PT chứa ẩn mẫu</div>
+                                        <div>PT chứa căn</div>
+                                        <div>PT tích</div>
+                                        <div>PT ẩn phụ</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">Xem chi tiết</button>
+                        </div>
+                    </div>
+
+                    <!-- Detailed Mindmap Content -->
+                    <div id="mindmap-detail" style="display: none;">
+                        <div class="mb-4">
+                            <button onclick="backToMindmapTopics()" class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600">
+                                ← Quay lại
+                            </button>
+                        </div>
+
+                        <!-- Topic 1 Mindmap -->
+                        <div id="topic1-mindmap" class="mindmap-detail-content" style="display: none;">
+                            <div class="bg-blue-50 rounded-xl p-8">
+                                <h3 class="text-3xl font-bold text-blue-800 mb-6 text-center">🧠 Sơ Đồ Tư Duy: Hàm Số</h3>
+                                
+                                <div class="bg-white rounded-xl p-6 shadow-lg">
+                                    <div class="text-center mb-8">
+                                        <div class="inline-block bg-blue-600 text-white px-6 py-3 rounded-full text-xl font-bold">
+                                            HÀM SỐ
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                        <div class="text-center">
+                                            <div class="bg-blue-100 rounded-lg p-4 mb-3">
+                                                <div class="text-2xl mb-2">📋</div>
+                                                <h4 class="font-bold text-blue-800 mb-2">KHÁI NIỆM</h4>
+                                                <div class="text-sm space-y-1">
+                                                    <div>• Định nghĩa</div>
+                                                    <div>• Ký hiệu y = f(x)</div>
+                                                    <div>• Biến độc lập</div>
+                                                    <div>• Biến phụ thuộc</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="text-center">
+                                            <div class="bg-green-100 rounded-lg p-4 mb-3">
+                                                <div class="text-2xl mb-2">🎯</div>
+                                                <h4 class="font-bold text-green-800 mb-2">TẬP XÁC ĐỊNH</h4>
+                                                <div class="text-sm space-y-1">
+                                                    <div>• Hàm đa thức: D = ℝ</div>
+                                                    <div>• Hàm phân thức</div>
+                                                    <div>• Hàm căn thức</div>
+                                                    <div>• Điều kiện xác định</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="text-center">
+                                            <div class="bg-purple-100 rounded-lg p-4 mb-3">
+                                                <div class="text-2xl mb-2">📊</div>
+                                                <h4 class="font-bold text-purple-800 mb-2">ĐỒ THỊ</h4>
+                                                <div class="text-sm space-y-1">
+                                                    <div>• Tập điểm M(x; f(x))</div>
+                                                    <div>• Lập bảng giá trị</div>
+                                                    <div>• Vẽ đồ thị</div>
+                                                    <div>• Đọc đồ thị</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="text-center">
+                                            <div class="bg-orange-100 rounded-lg p-4 mb-3">
+                                                <div class="text-2xl mb-2">⚡</div>
+                                                <h4 class="font-bold text-orange-800 mb-2">TÍNH CHẤT</h4>
+                                                <div class="text-sm space-y-1">
+                                                    <div>• Tính đơn điệu</div>
+                                                    <div>• Tính chẵn lẻ</div>
+                                                    <div>• Cực trị</div>
+                                                    <div>• Giá trị lớn nhất</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mt-8 text-center">
+                                        <div class="flex justify-center items-center space-x-4">
+                                            <div class="w-16 h-1 bg-blue-300"></div>
+                                            <div class="bg-blue-200 px-4 py-2 rounded-full text-blue-800 font-semibold">
+                                                Ứng dụng trong thực tế
+                                            </div>
+                                            <div class="w-16 h-1 bg-blue-300"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Topic 2 Mindmap -->
+                        <div id="topic2-mindmap" class="mindmap-detail-content" style="display: none;">
+                            <div class="bg-green-50 rounded-xl p-8">
+                                <h3 class="text-3xl font-bold text-green-800 mb-6 text-center">🧠 Sơ Đồ Tư Duy: Hàm Số Bậc Hai</h3>
+                                
+                                <div class="bg-white rounded-xl p-6 shadow-lg">
+                                    <div class="text-center mb-8">
+                                        <div class="inline-block bg-green-600 text-white px-6 py-3 rounded-full text-xl font-bold">
+                                            HÀM SỐ BẬC HAI
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                        <div class="text-center">
+                                            <div class="bg-green-100 rounded-lg p-4 mb-3">
+                                                <div class="text-2xl mb-2">📐</div>
+                                                <h4 class="font-bold text-green-800 mb-2">DẠNG TỔNG QUÁT</h4>
+                                                <div class="text-sm space-y-1">
+                                                    <div>• y = ax² + bx + c</div>
+                                                    <div>• a ≠ 0</div>
+                                                    <div>• TXĐ: D = ℝ</div>
+                                                    <div>• Hệ số a, b, c</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="text-center">
+                                            <div class="bg-blue-100 rounded-lg p-4 mb-3">
+                                                <div class="text-2xl mb-2">📈</div>
+                                                <h4 class="font-bold text-blue-800 mb-2">ĐỒ THỊ PARABOL</h4>
+                                                <div class="text-sm space-y-1">
+                                                    <div>• Hình dạng parabol</div>
+                                                    <div>• Bề lõm (a > 0)</div>
+                                                    <div>• Bề lồi (a < 0)</div>
+                                                    <div>• Trục đối xứng</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="text-center">
+                                            <div class="bg-purple-100 rounded-lg p-4 mb-3">
+                                                <div class="text-2xl mb-2">🎯</div>
+                                                <h4 class="font-bold text-purple-800 mb-2">ĐỈNH PARABOL</h4>
+                                                <div class="text-sm space-y-1">
+                                                    <div>• x₀ = -b/2a</div>
+                                                    <div>• y₀ = -Δ/4a</div>
+                                                    <div>• I(x₀; y₀)</div>
+                                                    <div>• Cực trị hàm số</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="text-center">
+                                            <div class="bg-orange-100 rounded-lg p-4 mb-3">
+                                                <div class="text-2xl mb-2">🌟</div>
+                                                <h4 class="font-bold text-orange-800 mb-2">ỨNG DỤNG</h4>
+                                                <div class="text-sm space-y-1">
+                                                    <div>• Bài toán tối ưu</div>
+                                                    <div>• Chuyển động</div>
+                                                    <div>• Kinh tế</div>
+                                                    <div>• Hình học</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mt-8 text-center">
+                                        <div class="flex justify-center items-center space-x-4">
+                                            <div class="w-16 h-1 bg-green-300"></div>
+                                            <div class="bg-green-200 px-4 py-2 rounded-full text-green-800 font-semibold">
+                                                Tính chất: Đồng biến, nghịch biến theo khoảng
+                                            </div>
+                                            <div class="w-16 h-1 bg-green-300"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Topic 3 Mindmap -->
+                        <div id="topic3-mindmap" class="mindmap-detail-content" style="display: none;">
+                            <div class="bg-purple-50 rounded-xl p-8">
+                                <h3 class="text-3xl font-bold text-purple-800 mb-6 text-center">🧠 Sơ Đồ Tư Duy: Dấu Tam Thức Bậc Hai</h3>
+                                
+                                <div class="bg-white rounded-xl p-6 shadow-lg">
+                                    <div class="text-center mb-8">
+                                        <div class="inline-block bg-purple-600 text-white px-6 py-3 rounded-full text-xl font-bold">
+                                            DẤU TAM THỨC BẬC HAI
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                        <div class="text-center">
+                                            <div class="bg-purple-100 rounded-lg p-4 mb-3">
+                                                <div class="text-2xl mb-2">🔢</div>
+                                                <h4 class="font-bold text-purple-800 mb-2">TAM THỨC</h4>
+                                                <div class="text-sm space-y-1">
+                                                    <div>• f(x) = ax² + bx + c</div>
+                                                    <div>• a ≠ 0</div>
+                                                    <div>• Biệt thức Δ</div>
+                                                    <div>• Δ = b² - 4ac</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="text-center">
+                                            <div class="bg-blue-100 rounded-lg p-4 mb-3">
+                                                <div class="text-2xl mb-2">🎲</div>
+                                                <h4 class="font-bold text-blue-800 mb-2">NGHIỆM</h4>
+                                                <div class="text-sm space-y-1">
+                                                    <div>• Δ > 0: 2 nghiệm</div>
+                                                    <div>• Δ = 0: 1 nghiệm</div>
+                                                    <div>• Δ < 0: vô nghiệm</div>
+                                                    <div>• x₁, x₂ (nếu có)</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="text-center">
+                                            <div class="bg-green-100 rounded-lg p-4 mb-3">
+                                                <div class="text-2xl mb-2">📊</div>
+                                                <h4 class="font-bold text-green-800 mb-2">BẢNG XÉT DẤU</h4>
+                                                <div class="text-sm space-y-1">
+                                                    <div>• Dấu của a</div>
+                                                    <div>• Khoảng nghiệm</div>
+                                                    <div>• Ngoài khoảng</div>
+                                                    <div>• Quy tắc dấu</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="text-center">
+                                            <div class="bg-orange-100 rounded-lg p-4 mb-3">
+                                                <div class="text-2xl mb-2">⚖️</div>
+                                                <h4 class="font-bold text-orange-800 mb-2">BẤT PHƯƠNG TRÌNH</h4>
+                                                <div class="text-sm space-y-1">
+                                                    <div>• f(x) > 0</div>
+                                                    <div>• f(x) < 0</div>
+                                                    <div>• f(x) ≥ 0</div>
+                                                    <div>• f(x) ≤ 0</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mt-8 text-center">
+                                        <div class="flex justify-center items-center space-x-4">
+                                            <div class="w-16 h-1 bg-purple-300"></div>
+                                            <div class="bg-purple-200 px-4 py-2 rounded-full text-purple-800 font-semibold">
+                                                Quy tắc: Cùng dấu a ngoài khoảng, trái dấu a trong khoảng
+                                            </div>
+                                            <div class="w-16 h-1 bg-purple-300"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Topic 4 Mindmap -->
+                        <div id="topic4-mindmap" class="mindmap-detail-content" style="display: none;">
+                            <div class="bg-red-50 rounded-xl p-8">
+                                <h3 class="text-3xl font-bold text-red-800 mb-6 text-center">🧠 Sơ Đồ Tư Duy: PT Quy Về PT Bậc Hai</h3>
+                                
+                                <div class="bg-white rounded-xl p-6 shadow-lg">
+                                    <div class="text-center mb-8">
+                                        <div class="inline-block bg-red-600 text-white px-6 py-3 rounded-full text-xl font-bold">
+                                            PT QUY VỀ PT BẬC HAI
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                        <div class="text-center">
+                                            <div class="bg-red-100 rounded-lg p-4 mb-3">
+                                                <div class="text-2xl mb-2">🔢</div>
+                                                <h4 class="font-bold text-red-800 mb-2">PT CHỨA ẨN MẪU</h4>
+                                                <div class="text-sm space-y-1">
+                                                    <div>• Tìm ĐKXĐ</div>
+                                                    <div>• Quy đồng mẫu</div>
+                                                    <div>• Khử mẫu</div>
+                                                    <div>• Kiểm tra ĐKXĐ</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="text-center">
+                                            <div class="bg-blue-100 rounded-lg p-4 mb-3">
+                                                <div class="text-2xl mb-2">√</div>
+                                                <h4 class="font-bold text-blue-800 mb-2">PT CHỨA CĂN</h4>
+                                                <div class="text-sm space-y-1">
+                                                    <div>• Tìm ĐKXĐ</div>
+                                                    <div>• Bình phương 2 vế</div>
+                                                    <div>• Giải PT bậc hai</div>
+                                                    <div>• Kiểm tra nghiệm</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="text-center">
+                                            <div class="bg-green-100 rounded-lg p-4 mb-3">
+                                                <div class="text-2xl mb-2">✖️</div>
+                                                <h4 class="font-bold text-green-800 mb-2">PT TÍCH</h4>
+                                                <div class="text-sm space-y-1">
+                                                    <div>• A(x)·B(x) = 0</div>
+                                                    <div>• A(x) = 0</div>
+                                                    <div>• B(x) = 0</div>
+                                                    <div>• Hợp nghiệm</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="text-center">
+                                            <div class="bg-orange-100 rounded-lg p-4 mb-3">
+                                                <div class="text-2xl mb-2">🔄</div>
+                                                <h4 class="font-bold text-orange-800 mb-2">PT ẨN PHỤ</h4>
+                                                <div class="text-sm space-y-1">
+                                                    <div>• Đặt t = g(x)</div>
+                                                    <div>• at² + bt + c = 0</div>
+                                                    <div>• Giải theo t</div>
+                                                    <div>• Trở về ẩn x</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mt-8 text-center">
+                                        <div class="flex justify-center items-center space-x-4">
+                                            <div class="w-16 h-1 bg-red-300"></div>
+                                            <div class="bg-red-200 px-4 py-2 rounded-full text-red-800 font-semibold">
+                                                Mục tiêu: Đưa về dạng ax² + bx + c = 0
+                                            </div>
+                                            <div class="w-16 h-1 bg-red-300"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video Content -->
+                <div id="video-content" class="lesson-content-item" style="display: none;">
+                    <h3 class="text-2xl font-bold mb-6 text-center">🎥 Video Bài Giảng</h3>
+                    
+                    <!-- Video Categories -->
+                    <div class="mb-8">
+                        <div class="flex flex-wrap justify-center gap-4">
+                            <button onclick="showVideoCategory('topic1')" class="video-category-btn bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors">Chủ đề 1: Hàm Số</button>
+                            <button onclick="showVideoCategory('topic2')" class="video-category-btn bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition-colors">Chủ đề 2: Hàm Số Bậc Hai</button>
+                            <button onclick="showVideoCategory('topic3')" class="video-category-btn bg-purple-500 text-white px-6 py-2 rounded-lg hover:bg-purple-600 transition-colors">Chủ đề 3: Dấu Tam Thức Bậc Hai</button>
+                            <button onclick="showVideoCategory('topic4')" class="video-category-btn bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition-colors">Chủ đề 4: PT Quy Về Bậc Hai</button>
+                        </div>
+                    </div>
+
+                    <!-- Video Lists -->
+                    <div id="video-lists">
+                        <!-- Topic 1 Videos -->
+                        <div id="topic1-videos" class="video-category active">
+                            <h4 class="text-2xl font-bold mb-6 text-center text-blue-600">🎥 Chủ Đề 1: Hàm Số</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                <div class="bg-white border rounded-lg p-4 card-hover">
+                                    <div class="video-container bg-gray-200 rounded-lg mb-4">
+                                        <div class="flex items-center justify-center h-full">
+                                            <div class="text-center">
+                                                <div class="text-4xl mb-2">▶️</div>
+                                                <p class="text-gray-600">Video 1.1</p>
+                                                <p class="text-sm text-gray-500">25 phút</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h5 class="font-bold mb-2">Khái niệm hàm số</h5>
+                                    <p class="text-gray-600 text-sm mb-3">Định nghĩa, ký hiệu và các khái niệm cơ bản về hàm số</p>
+                                    <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 w-full">Xem video</button>
+                                </div>
+                                <div class="bg-white border rounded-lg p-4 card-hover">
+                                    <div class="video-container bg-gray-200 rounded-lg mb-4">
+                                        <div class="flex items-center justify-center h-full">
+                                            <div class="text-center">
+                                                <div class="text-4xl mb-2">▶️</div>
+                                                <p class="text-gray-600">Video 1.2</p>
+                                                <p class="text-sm text-gray-500">30 phút</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h5 class="font-bold mb-2">Tập xác định hàm số</h5>
+                                    <p class="text-gray-600 text-sm mb-3">Cách tìm tập xác định của các loại hàm số khác nhau</p>
+                                    <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 w-full">Xem video</button>
+                                </div>
+                                <div class="bg-white border rounded-lg p-4 card-hover">
+                                    <div class="video-container bg-gray-200 rounded-lg mb-4">
+                                        <div class="flex items-center justify-center h-full">
+                                            <div class="text-center">
+                                                <div class="text-4xl mb-2">▶️</div>
+                                                <p class="text-gray-600">Video 1.3</p>
+                                                <p class="text-sm text-gray-500">35 phút</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h5 class="font-bold mb-2">Đồ thị hàm số</h5>
+                                    <p class="text-gray-600 text-sm mb-3">Cách vẽ và đọc đồ thị hàm số</p>
+                                    <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 w-full">Xem video</button>
+                                </div>
+                                <div class="bg-white border rounded-lg p-4 card-hover">
+                                    <div class="video-container bg-gray-200 rounded-lg mb-4">
+                                        <div class="flex items-center justify-center h-full">
+                                            <div class="text-center">
+                                                <div class="text-4xl mb-2">▶️</div>
+                                                <p class="text-gray-600">Video 1.4</p>
+                                                <p class="text-sm text-gray-500">28 phút</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h5 class="font-bold mb-2">Tính chất hàm số</h5>
+                                    <p class="text-gray-600 text-sm mb-3">Tính đơn điệu, tính chẵn lẻ và các tính chất khác</p>
+                                    <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 w-full">Xem video</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Topic 2 Videos -->
+                        <div id="topic2-videos" class="video-category" style="display: none;">
+                            <h4 class="text-2xl font-bold mb-6 text-center text-green-600">🎥 Chủ Đề 2: Hàm Số Bậc Hai</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                <div class="bg-white border rounded-lg p-4 card-hover">
+                                    <div class="video-container bg-gray-200 rounded-lg mb-4">
+                                        <div class="flex items-center justify-center h-full">
+                                            <div class="text-center">
+                                                <div class="text-4xl mb-2">▶️</div>
+                                                <p class="text-gray-600">Video 2.1</p>
+                                                <p class="text-sm text-gray-500">32 phút</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h5 class="font-bold mb-2">Dạng tổng quát hàm bậc hai</h5>
+                                    <p class="text-gray-600 text-sm mb-3">y = ax² + bx + c và các hệ số a, b, c</p>
+                                    <button class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 w-full">Xem video</button>
+                                </div>
+                                <div class="bg-white border rounded-lg p-4 card-hover">
+                                    <div class="video-container bg-gray-200 rounded-lg mb-4">
+                                        <div class="flex items-center justify-center h-full">
+                                            <div class="text-center">
+                                                <div class="text-4xl mb-2">▶️</div>
+                                                <p class="text-gray-600">Video 2.2</p>
+                                                <p class="text-sm text-gray-500">38 phút</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h5 class="font-bold mb-2">Đồ thị parabol</h5>
+                                    <p class="text-gray-600 text-sm mb-3">Cách vẽ parabol và các đặc điểm của đồ thị</p>
+                                    <button class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 w-full">Xem video</button>
+                                </div>
+                                <div class="bg-white border rounded-lg p-4 card-hover">
+                                    <div class="video-container bg-gray-200 rounded-lg mb-4">
+                                        <div class="flex items-center justify-center h-full">
+                                            <div class="text-center">
+                                                <div class="text-4xl mb-2">▶️</div>
+                                                <p class="text-gray-600">Video 2.3</p>
+                                                <p class="text-sm text-gray-500">30 phút</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h5 class="font-bold mb-2">Đỉnh parabol và trục đối xứng</h5>
+                                    <p class="text-gray-600 text-sm mb-3">Công thức tính đỉnh và tìm trục đối xứng</p>
+                                    <button class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 w-full">Xem video</button>
+                                </div>
+                                <div class="bg-white border rounded-lg p-4 card-hover">
+                                    <div class="video-container bg-gray-200 rounded-lg mb-4">
+                                        <div class="flex items-center justify-center h-full">
+                                            <div class="text-center">
+                                                <div class="text-4xl mb-2">▶️</div>
+                                                <p class="text-gray-600">Video 2.4</p>
+                                                <p class="text-sm text-gray-500">42 phút</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h5 class="font-bold mb-2">Ứng dụng hàm bậc hai</h5>
+                                    <p class="text-gray-600 text-sm mb-3">Bài toán tối ưu và ứng dụng thực tế</p>
+                                    <button class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 w-full">Xem video</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Topic 3 Videos -->
+                        <div id="topic3-videos" class="video-category" style="display: none;">
+                            <h4 class="text-2xl font-bold mb-6 text-center text-purple-600">🎥 Chủ Đề 3: Dấu Của Tam Thức Bậc Hai</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                <div class="bg-white border rounded-lg p-4 card-hover">
+                                    <div class="video-container bg-gray-200 rounded-lg mb-4">
+                                        <div class="flex items-center justify-center h-full">
+                                            <div class="text-center">
+                                                <div class="text-4xl mb-2">▶️</div>
+                                                <p class="text-gray-600">Video 3.1</p>
+                                                <p class="text-sm text-gray-500">28 phút</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h5 class="font-bold mb-2">Tam thức bậc hai</h5>
+                                    <p class="text-gray-600 text-sm mb-3">Khái niệm và biệt thức của tam thức bậc hai</p>
+                                    <button class="bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600 w-full">Xem video</button>
+                                </div>
+                                <div class="bg-white border rounded-lg p-4 card-hover">
+                                    <div class="video-container bg-gray-200 rounded-lg mb-4">
+                                        <div class="flex items-center justify-center h-full">
+                                            <div class="text-center">
+                                                <div class="text-4xl mb-2">▶️</div>
+                                                <p class="text-gray-600">Video 3.2</p>
+                                                <p class="text-sm text-gray-500">35 phút</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h5 class="font-bold mb-2">Nghiệm của tam thức</h5>
+                                    <p class="text-gray-600 text-sm mb-3">Cách tìm nghiệm theo biệt thức Δ</p>
+                                    <button class="bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600 w-full">Xem video</button>
+                                </div>
+                                <div class="bg-white border rounded-lg p-4 card-hover">
+                                    <div class="video-container bg-gray-200 rounded-lg mb-4">
+                                        <div class="flex items-center justify-center h-full">
+                                            <div class="text-center">
+                                                <div class="text-4xl mb-2">▶️</div>
+                                                <p class="text-gray-600">Video 3.3</p>
+                                                <p class="text-sm text-gray-500">40 phút</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h5 class="font-bold mb-2">Bảng xét dấu tam thức</h5>
+                                    <p class="text-gray-600 text-sm mb-3">Quy tắc xét dấu và lập bảng xét dấu</p>
+                                    <button class="bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600 w-full">Xem video</button>
+                                </div>
+                                <div class="bg-white border rounded-lg p-4 card-hover">
+                                    <div class="video-container bg-gray-200 rounded-lg mb-4">
+                                        <div class="flex items-center justify-center h-full">
+                                            <div class="text-center">
+                                                <div class="text-4xl mb-2">▶️</div>
+                                                <p class="text-gray-600">Video 3.4</p>
+                                                <p class="text-sm text-gray-500">45 phút</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h5 class="font-bold mb-2">Giải bất phương trình</h5>
+                                    <p class="text-gray-600 text-sm mb-3">Ứng dụng dấu tam thức để giải BPT</p>
+                                    <button class="bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600 w-full">Xem video</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Topic 4 Videos -->
+                        <div id="topic4-videos" class="video-category" style="display: none;">
+                            <h4 class="text-2xl font-bold mb-6 text-center text-red-600">🎥 Chủ Đề 4: Phương Trình Quy Về Phương Trình Bậc Hai</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                <div class="bg-white border rounded-lg p-4 card-hover">
+                                    <div class="video-container bg-gray-200 rounded-lg mb-4">
+                                        <div class="flex items-center justify-center h-full">
+                                            <div class="text-center">
+                                                <div class="text-4xl mb-2">▶️</div>
+                                                <p class="text-gray-600">Video 4.1</p>
+                                                <p class="text-sm text-gray-500">38 phút</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h5 class="font-bold mb-2">PT chứa ẩn ở mẫu</h5>
+                                    <p class="text-gray-600 text-sm mb-3">Phương pháp giải và các bước thực hiện</p>
+                                    <button class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 w-full">Xem video</button>
+                                </div>
+                                <div class="bg-white border rounded-lg p-4 card-hover">
+                                    <div class="video-container bg-gray-200 rounded-lg mb-4">
+                                        <div class="flex items-center justify-center h-full">
+                                            <div class="text-center">
+                                                <div class="text-4xl mb-2">▶️</div>
+                                                <p class="text-gray-600">Video 4.2</p>
+                                                <p class="text-sm text-gray-500">42 phút</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h5 class="font-bold mb-2">PT chứa căn thức</h5>
+                                    <p class="text-gray-600 text-sm mb-3">Phương pháp bình phương và kiểm tra nghiệm</p>
+                                    <button class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 w-full">Xem video</button>
+                                </div>
+                                <div class="bg-white border rounded-lg p-4 card-hover">
+                                    <div class="video-container bg-gray-200 rounded-lg mb-4">
+                                        <div class="flex items-center justify-center h-full">
+                                            <div class="text-center">
+                                                <div class="text-4xl mb-2">▶️</div>
+                                                <p class="text-gray-600">Video 4.3</p>
+                                                <p class="text-sm text-gray-500">30 phút</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h5 class="font-bold mb-2">PT tích</h5>
+                                    <p class="text-gray-600 text-sm mb-3">Nguyên lý và cách giải phương trình tích</p>
+                                    <button class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 w-full">Xem video</button>
+                                </div>
+                                <div class="bg-white border rounded-lg p-4 card-hover">
+                                    <div class="video-container bg-gray-200 rounded-lg mb-4">
+                                        <div class="flex items-center justify-center h-full">
+                                            <div class="text-center">
+                                                <div class="text-4xl mb-2">▶️</div>
+                                                <p class="text-gray-600">Video 4.4</p>
+                                                <p class="text-sm text-gray-500">48 phút</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h5 class="font-bold mb-2">PT đặt ẩn phụ</h5>
+                                    <p class="text-gray-600 text-sm mb-3">Các dạng thường gặp và phương pháp giải</p>
+                                    <button class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 w-full">Xem video</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kho Đề Thi Section -->
+    <section id="exams" class="section py-16">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">📚 Kho Đề Thi</h2>
+                <p class="text-xl text-gray-600">Bộ sưu tập đề thi theo chủ đề và chuyên đề</p>
+            </div>
+
+            <!-- Exam Categories -->
+            <div class="mb-8">
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button onclick="showExamCategory('topic1')" class="exam-category-btn bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors">Chủ đề 1: Hàm Số</button>
+                    <button onclick="showExamCategory('topic2')" class="exam-category-btn bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition-colors">Chủ đề 2: Hàm Số Bậc Hai</button>
+                    <button onclick="showExamCategory('topic3')" class="exam-category-btn bg-purple-500 text-white px-6 py-2 rounded-lg hover:bg-purple-600 transition-colors">Chủ đề 3: Dấu Tam Thức Bậc Hai</button>
+                    <button onclick="showExamCategory('topic4')" class="exam-category-btn bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition-colors">Chủ đề 4: PT Quy Về Bậc Hai</button>
+                    <button onclick="showExamCategory('review')" class="exam-category-btn bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition-colors">Ôn tập chuyên đề</button>
+                </div>
+            </div>
+
+            <!-- Exam Lists -->
+            <div id="exam-lists">
+                <!-- Topic 1 Exams -->
+                <div id="topic1-exams" class="exam-category active">
+                    <h3 class="text-2xl font-bold mb-6 text-center text-blue-600">📘 Chủ Đề 1: Hàm Số</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+                            <div class="flex items-center mb-4">
+                                <div class="text-3xl mr-3">📋</div>
+                                <div>
+                                    <h4 class="text-lg font-bold">Đề 01 - Chủ đề 1</h4>
+                                    <p class="text-sm text-gray-600">Hàm số cơ bản</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 mb-4">Kiểm tra kiến thức cơ bản về hàm số</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-500">⏱️ 45 phút</span>
+                                <button class="bg-pink-200 text-pink-700 px-4 py-2 rounded-lg hover:bg-pink-300">Làm bài</button>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+                            <div class="flex items-center mb-4">
+                                <div class="text-3xl mr-3">📋</div>
+                                <div>
+                                    <h4 class="text-lg font-bold">Đề 02 - Chủ đề 1</h4>
+                                    <p class="text-sm text-gray-600">Đồ thị hàm số</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 mb-4">Bài tập về đồ thị và tính chất hàm số</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-500">⏱️ 45 phút</span>
+                                <button class="bg-pink-200 text-pink-700 px-4 py-2 rounded-lg hover:bg-pink-300">Làm bài</button>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+                            <div class="flex items-center mb-4">
+                                <div class="text-3xl mr-3">📋</div>
+                                <div>
+                                    <h4 class="text-lg font-bold">Đề 03 - Chủ đề 1</h4>
+                                    <p class="text-sm text-gray-600">Hàm số bậc nhất</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 mb-4">Bài tập về hàm số bậc nhất và ứng dụng</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-500">⏱️ 50 phút</span>
+                                <button class="bg-pink-200 text-pink-700 px-4 py-2 rounded-lg hover:bg-pink-300">Làm bài</button>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+                            <div class="flex items-center mb-4">
+                                <div class="text-3xl mr-3">📋</div>
+                                <div>
+                                    <h4 class="text-lg font-bold">Đề 04 - Chủ đề 1</h4>
+                                    <p class="text-sm text-gray-600">Hàm số nâng cao</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 mb-4">Bài tập nâng cao về hàm số</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-500">⏱️ 60 phút</span>
+                                <button class="bg-pink-200 text-pink-700 px-4 py-2 rounded-lg hover:bg-pink-300">Làm bài</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 2 Exams -->
+                <div id="topic2-exams" class="exam-category" style="display: none;">
+                    <h3 class="text-2xl font-bold mb-6 text-center text-green-600">📗 Chủ Đề 2: Hàm Số Bậc Hai</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+                            <div class="flex items-center mb-4">
+                                <div class="text-3xl mr-3">📊</div>
+                                <div>
+                                    <h4 class="text-lg font-bold">Đề 01 - Chủ đề 2</h4>
+                                    <p class="text-sm text-gray-600">Hàm số bậc hai cơ bản</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 mb-4">Kiểm tra về hàm số bậc hai và parabol</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-500">⏱️ 45 phút</span>
+                                <button class="bg-pink-200 text-pink-700 px-4 py-2 rounded-lg hover:bg-pink-300">Làm bài</button>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+                            <div class="flex items-center mb-4">
+                                <div class="text-3xl mr-3">📊</div>
+                                <div>
+                                    <h4 class="text-lg font-bold">Đề 02 - Chủ đề 2</h4>
+                                    <p class="text-sm text-gray-600">Đồ thị parabol</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 mb-4">Bài tập về đồ thị hàm số bậc hai</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-500">⏱️ 50 phút</span>
+                                <button class="bg-pink-200 text-pink-700 px-4 py-2 rounded-lg hover:bg-pink-300">Làm bài</button>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+                            <div class="flex items-center mb-4">
+                                <div class="text-3xl mr-3">📊</div>
+                                <div>
+                                    <h4 class="text-lg font-bold">Đề 03 - Chủ đề 2</h4>
+                                    <p class="text-sm text-gray-600">Tính chất hàm bậc hai</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 mb-4">Tính chất và ứng dụng hàm số bậc hai</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-500">⏱️ 55 phút</span>
+                                <button class="bg-pink-200 text-pink-700 px-4 py-2 rounded-lg hover:bg-pink-300">Làm bài</button>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+                            <div class="flex items-center mb-4">
+                                <div class="text-3xl mr-3">📊</div>
+                                <div>
+                                    <h4 class="text-lg font-bold">Đề 04 - Chủ đề 2</h4>
+                                    <p class="text-sm text-gray-600">Hàm bậc hai nâng cao</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 mb-4">Bài tập nâng cao về hàm số bậc hai</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-500">⏱️ 60 phút</span>
+                                <button class="bg-pink-200 text-pink-700 px-4 py-2 rounded-lg hover:bg-pink-300">Làm bài</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 3 Exams -->
+                <div id="topic3-exams" class="exam-category" style="display: none;">
+                    <h3 class="text-2xl font-bold mb-6 text-center text-purple-600">📘 Chủ Đề 3: Dấu Của Tam Thức Bậc Hai</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+                            <div class="flex items-center mb-4">
+                                <div class="text-3xl mr-3">📈</div>
+                                <div>
+                                    <h4 class="text-lg font-bold">Đề 01 - Chủ đề 3</h4>
+                                    <p class="text-sm text-gray-600">Tam thức bậc hai cơ bản</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 mb-4">Kiểm tra về tam thức bậc hai và dấu</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-500">⏱️ 45 phút</span>
+                                <button class="bg-pink-200 text-pink-700 px-4 py-2 rounded-lg hover:bg-pink-300">Làm bài</button>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+                            <div class="flex items-center mb-4">
+                                <div class="text-3xl mr-3">📈</div>
+                                <div>
+                                    <h4 class="text-lg font-bold">Đề 02 - Chủ đề 3</h4>
+                                    <p class="text-sm text-gray-600">Bảng xét dấu</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 mb-4">Bài tập về bảng xét dấu tam thức</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-500">⏱️ 50 phút</span>
+                                <button class="bg-pink-200 text-pink-700 px-4 py-2 rounded-lg hover:bg-pink-300">Làm bài</button>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+                            <div class="flex items-center mb-4">
+                                <div class="text-3xl mr-3">📈</div>
+                                <div>
+                                    <h4 class="text-lg font-bold">Đề 03 - Chủ đề 3</h4>
+                                    <p class="text-sm text-gray-600">Ứng dụng tam thức</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 mb-4">Ứng dụng dấu tam thức bậc hai</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-500">⏱️ 55 phút</span>
+                                <button class="bg-pink-200 text-pink-700 px-4 py-2 rounded-lg hover:bg-pink-300">Làm bài</button>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+                            <div class="flex items-center mb-4">
+                                <div class="text-3xl mr-3">📈</div>
+                                <div>
+                                    <h4 class="text-lg font-bold">Đề 04 - Chủ đề 3</h4>
+                                    <p class="text-sm text-gray-600">Tam thức nâng cao</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 mb-4">Bài tập nâng cao về tam thức bậc hai</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-500">⏱️ 60 phút</span>
+                                <button class="bg-pink-200 text-pink-700 px-4 py-2 rounded-lg hover:bg-pink-300">Làm bài</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic 4 Exams -->
+                <div id="topic4-exams" class="exam-category" style="display: none;">
+                    <h3 class="text-2xl font-bold mb-6 text-center text-red-600">📘 Chủ Đề 4: Phương Trình Quy Về Phương Trình Bậc Hai</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+                            <div class="flex items-center mb-4">
+                                <div class="text-3xl mr-3">🧮</div>
+                                <div>
+                                    <h4 class="text-lg font-bold">Đề 01 - Chủ đề 4</h4>
+                                    <p class="text-sm text-gray-600">PT quy về bậc hai cơ bản</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 mb-4">Phương trình quy về bậc hai cơ bản</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-500">⏱️ 45 phút</span>
+                                <button class="bg-pink-200 text-pink-700 px-4 py-2 rounded-lg hover:bg-pink-300">Làm bài</button>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+                            <div class="flex items-center mb-4">
+                                <div class="text-3xl mr-3">🧮</div>
+                                <div>
+                                    <h4 class="text-lg font-bold">Đề 02 - Chủ đề 4</h4>
+                                    <p class="text-sm text-gray-600">PT chứa ẩn ở mẫu</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 mb-4">Phương trình chứa ẩn ở mẫu số</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-500">⏱️ 50 phút</span>
+                                <button class="bg-pink-200 text-pink-700 px-4 py-2 rounded-lg hover:bg-pink-300">Làm bài</button>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+                            <div class="flex items-center mb-4">
+                                <div class="text-3xl mr-3">🧮</div>
+                                <div>
+                                    <h4 class="text-lg font-bold">Đề 03 - Chủ đề 4</h4>
+                                    <p class="text-sm text-gray-600">PT chứa căn thức</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 mb-4">Phương trình chứa căn thức</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-500">⏱️ 55 phút</span>
+                                <button class="bg-pink-200 text-pink-700 px-4 py-2 rounded-lg hover:bg-pink-300">Làm bài</button>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+                            <div class="flex items-center mb-4">
+                                <div class="text-3xl mr-3">🧮</div>
+                                <div>
+                                    <h4 class="text-lg font-bold">Đề 04 - Chủ đề 4</h4>
+                                    <p class="text-sm text-gray-600">PT quy về bậc hai nâng cao</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 mb-4">Bài tập nâng cao về PT quy về bậc hai</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-500">⏱️ 60 phút</span>
+                                <button class="bg-pink-200 text-pink-700 px-4 py-2 rounded-lg hover:bg-pink-300">Làm bài</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review Exams -->
+                <div id="review-exams" class="exam-category" style="display: none;">
+                    <h3 class="text-2xl font-bold mb-6 text-center text-orange-600">📚 Ôn Tập Chuyên Đề</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+                            <div class="flex items-center mb-4">
+                                <div class="text-3xl mr-3">🎯</div>
+                                <div>
+                                    <h4 class="text-lg font-bold">Đề 01 - Ôn tập chuyên đề</h4>
+                                    <p class="text-sm text-gray-600">Tổng hợp kiến thức</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 mb-4">Ôn tập tổng hợp các chủ đề đã học</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-500">⏱️ 90 phút</span>
+                                <button class="bg-pink-200 text-pink-700 px-4 py-2 rounded-lg hover:bg-pink-300">Làm bài</button>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+                            <div class="flex items-center mb-4">
+                                <div class="text-3xl mr-3">🎯</div>
+                                <div>
+                                    <h4 class="text-lg font-bold">Đề 02 - Ôn tập chuyên đề</h4>
+                                    <p class="text-sm text-gray-600">Đề thi thử</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 mb-4">Đề thi thử mô phỏng kỳ thi chính thức</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-500">⏱️ 120 phút</span>
+                                <button class="bg-pink-200 text-pink-700 px-4 py-2 rounded-lg hover:bg-pink-300">Làm bài</button>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl shadow-lg p-6 card-hover">
+                            <div class="flex items-center mb-4">
+                                <div class="text-3xl mr-3">🎯</div>
+                                <div>
+                                    <h4 class="text-lg font-bold">Đề 03 - Ôn tập chuyên đề</h4>
+                                    <p class="text-sm text-gray-600">Đề nâng cao</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 mb-4">Đề thi nâng cao cho học sinh giỏi</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-500">⏱️ 150 phút</span>
+                                <button class="bg-pink-200 text-pink-700 px-4 py-2 rounded-lg hover:bg-pink-300">Làm bài</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Luyện Tập Section -->
+    <section id="practice" class="section py-16">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">✏️ Luyện Tập</h2>
+                <p class="text-xl text-gray-600">Rèn luyện kỹ năng qua 4 chủ đề chính</p>
+            </div>
+
+            <!-- Practice Topics -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <div class="bg-gradient-to-br from-blue-100 to-blue-200 rounded-xl p-6 card-hover cursor-pointer" onclick="showPracticeDetail('topic1')">
+                    <div class="text-center">
+                        <div class="text-4xl mb-4">📊</div>
+                        <h3 class="text-xl font-bold text-blue-800 mb-2">Chủ Đề 1</h3>
+                        <p class="text-blue-600 mb-4">Hàm Số</p>
+                        <div class="text-sm text-blue-700 mb-4">
+                            <p>• Tập xác định</p>
+                            <p>• Đồ thị hàm số</p>
+                            <p>• Tính chất hàm số</p>
+                        </div>
+                        <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Luyện tập</button>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-br from-green-100 to-green-200 rounded-xl p-6 card-hover cursor-pointer" onclick="showPracticeDetail('topic2')">
+                    <div class="text-center">
+                        <div class="text-4xl mb-4">📈</div>
+                        <h3 class="text-xl font-bold text-green-800 mb-2">Chủ Đề 2</h3>
+                        <p class="text-green-600 mb-4">Hàm Số Bậc Hai</p>
+                        <div class="text-sm text-green-700 mb-4">
+                            <p>• Đồ thị parabol</p>
+                            <p>• Tính chất hàm bậc hai</p>
+                            <p>• Ứng dụng thực tế</p>
+                        </div>
+                        <button class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">Luyện tập</button>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-br from-purple-100 to-purple-200 rounded-xl p-6 card-hover cursor-pointer" onclick="showPracticeDetail('topic3')">
+                    <div class="text-center">
+                        <div class="text-4xl mb-4">📉</div>
+                        <h3 class="text-xl font-bold text-purple-800 mb-2">Chủ Đề 3</h3>
+                        <p class="text-purple-600 mb-4">Dấu Tam Thức Bậc Hai</p>
+                        <div class="text-sm text-purple-700 mb-4">
+                            <p>• Bảng xét dấu</p>
+                            <p>• Giải bất phương trình</p>
+                            <p>• Ứng dụng tam thức</p>
+                        </div>
+                        <button class="bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600">Luyện tập</button>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-br from-red-100 to-red-200 rounded-xl p-6 card-hover cursor-pointer" onclick="showPracticeDetail('topic4')">
+                    <div class="text-center">
+                        <div class="text-4xl mb-4">🧮</div>
+                        <h3 class="text-xl font-bold text-red-800 mb-2">Chủ Đề 4</h3>
+                        <p class="text-red-600 mb-4">PT Quy Về PT Bậc Hai</p>
+                        <div class="text-sm text-red-700 mb-4">
+                            <p>• PT chứa ẩn ở mẫu</p>
+                            <p>• PT chứa căn thức</p>
+                            <p>• PT đặt ẩn phụ</p>
+                        </div>
+                        <button class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">Luyện tập</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Practice Content -->
+            <div id="practice-content" class="bg-white rounded-xl shadow-lg p-8">
+                <h3 class="text-2xl font-bold text-center mb-6">Thử Sức Ngay</h3>
+                <div class="max-w-4xl mx-auto">
+                    <div class="bg-gradient-to-r from-blue-100 to-purple-100 rounded-xl p-6 mb-6">
+                        <h4 class="text-lg font-bold text-center mb-4">Bài toán:</h4>
+                        <div class="bg-white p-4 rounded-lg mb-4 text-sm leading-relaxed">
+                            <p class="mb-3">Một người nuôi cá thí nghiệm trong hồ. Người đó thấy rằng nếu mỗi đơn vị diện tích của mặt hồ có <strong>n</strong> con cá thì trung bình mỗi con cá sau một vụ cân nặng <strong>P(n) = 480 - 20n</strong> (gam).</p>
+                            <p class="mb-3">Hỏi phải thả bao nhiêu cá trên một đơn vị diện tích của mặt hồ để sau một vụ thu hoạch được nhiều cá nhất biết mỗi đơn vị diện tích mặt hồ không được thả quá 23 con cá?</p>
+                        </div>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                            <button class="bg-white px-4 py-3 rounded-lg shadow hover:shadow-lg transition-shadow practice-btn" onclick="checkFishAnswer(10)">A. 10</button>
+                            <button class="bg-white px-4 py-3 rounded-lg shadow hover:shadow-lg transition-shadow practice-btn" onclick="checkFishAnswer(12)">B. 12</button>
+                            <button class="bg-white px-4 py-3 rounded-lg shadow hover:shadow-lg transition-shadow practice-btn" onclick="checkFishAnswer(14)">C. 14</button>
+                            <button class="bg-white px-4 py-3 rounded-lg shadow hover:shadow-lg transition-shadow practice-btn" onclick="checkFishAnswer(16)">D. 16</button>
+                        </div>
+                        <div id="practice-result" class="text-center text-lg font-semibold"></div>
+                    </div>
+                    <div class="text-center">
+                        <button class="bg-pink-200 text-pink-700 px-6 py-3 rounded-lg hover:bg-pink-300 transition-colors" onclick="newPracticeQuestion()">
+                            Câu hỏi mới
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hỏi AI Section -->
+    <section id="ai" class="section py-16">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">🤖 Hỏi AI</h2>
+                <p class="text-xl text-gray-600">Trợ lý AI thông minh giải đáp mọi thắc mắc toán học</p>
+            </div>
+
+            <div class="max-w-4xl mx-auto">
+                <!-- Chat Interface -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="gradient-bg text-white p-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="text-2xl">🤖</div>
+                            <div>
+                                <h3 class="font-bold">MathBot AI</h3>
+                                <p class="text-sm opacity-90">Trợ lý toán học thông minh</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="h-96 overflow-y-auto p-6 bg-gray-50" id="chat-messages">
+                        <div class="mb-4">
+                            <div class="bg-pink-200 text-pink-800 p-3 rounded-lg inline-block max-w-xs leading-relaxed">
+                                Xin chào! Tôi là MathBot. Bạn có thắc mắc gì về toán học không?
+                            </div>
+                        </div>
+                        <div class="mb-4 text-right">
+                            <div class="bg-gray-300 text-gray-800 p-3 rounded-lg inline-block max-w-xs leading-relaxed">
+                                Làm thế nào để giải phương trình bậc 2?
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <div class="bg-pink-200 text-pink-800 p-3 rounded-lg inline-block max-w-md leading-relaxed">
+                                Để giải phương trình bậc 2 <strong>ax² + bx + c = 0</strong>, bạn có thể sử dụng công thức nghiệm:<br>
+                                <strong>x = (-b ± √(b²-4ac)) / 2a</strong><br>
+                                Bạn có muốn tôi giải một ví dụ cụ thể không?
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-4 border-t">
+                        <div class="flex space-x-2">
+                            <input type="text" id="ai-input" placeholder="Nhập câu hỏi toán học của bạn..." class="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
+                            <button onclick="sendAIMessage()" class="bg-pink-200 text-pink-700 px-6 py-2 rounded-lg hover:bg-pink-300 transition-colors">
+                                Gửi
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Questions -->
+                <div class="mt-8">
+                    <h3 class="text-xl font-bold text-center mb-6">Câu hỏi thường gặp</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <button onclick="askQuickQuestion('Cách giải hệ phương trình tuyến tính?')" class="bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow text-left">
+                            <div class="text-lg font-semibold text-pink-500">Hệ phương trình tuyến tính</div>
+                            <div class="text-gray-600">Cách giải hệ phương trình tuyến tính?</div>
+                        </button>
+                        <button onclick="askQuickQuestion('Công thức tính diện tích hình tròn?')" class="bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow text-left">
+                            <div class="text-lg font-semibold text-pink-500">Diện tích hình tròn</div>
+                            <div class="text-gray-600">Công thức tính diện tích hình tròn?</div>
+                        </button>
+                        <button onclick="askQuickQuestion('Cách tính đạo hàm của hàm số?')" class="bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow text-left">
+                            <div class="text-lg font-semibold text-pink-500">Đạo hàm</div>
+                            <div class="text-gray-600">Cách tính đạo hàm của hàm số?</div>
+                        </button>
+                        <button onclick="askQuickQuestion('Định lý Pythagoras là gì?')" class="bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow text-left">
+                            <div class="text-lg font-semibold text-pink-500">Định lý Pythagoras</div>
+                            <div class="text-gray-600">Định lý Pythagoras là gì?</div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Liên Hệ Section -->
+    <section id="contact" class="section py-16">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">📞 Liên Hệ</h2>
+                <p class="text-xl text-gray-600">Chúng tôi luôn sẵn sàng hỗ trợ bạn</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Contact Form -->
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <h3 class="text-2xl font-bold mb-6">Gửi tin nhắn cho chúng tôi</h3>
+                    <form class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Họ và tên</label>
+                            <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500" placeholder="Nhập họ và tên của bạn">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                            <input type="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500" placeholder="Nhập email của bạn">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Chủ đề</label>
+                            <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
+                                <option>Hỗ trợ kỹ thuật</option>
+                                <option>Góp ý về nội dung</option>
+                                <option>Hợp tác</option>
+                                <option>Khác</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Tin nhắn</label>
+                            <textarea rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500" placeholder="Nhập tin nhắn của bạn..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-pink-200 text-pink-700 py-3 rounded-lg hover:bg-pink-300 transition-colors font-semibold">
+                            Gửi tin nhắn
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="space-y-8">
+                    <div class="bg-white rounded-xl shadow-lg p-8">
+                        <h3 class="text-2xl font-bold mb-6">Thông tin liên hệ</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-4">
+                                <div class="text-2xl">📍</div>
+                                <div>
+                                    <div class="font-semibold">Địa chỉ</div>
+                                    <div class="text-gray-600">123 Đường ABC, Quận XYZ, TP.HCM</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <div class="text-2xl">📞</div>
+                                <div>
+                                    <div class="font-semibold">Điện thoại</div>
+                                    <div class="text-gray-600">+84 123 456 789</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <div class="text-2xl">✉️</div>
+                                <div>
+                                    <div class="font-semibold">Email</div>
+                                    <div class="text-gray-600">support@mathlearn.vn</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-pink-400 to-pink-500 text-white rounded-xl p-8">
+                        <h3 class="text-2xl font-bold mb-4">Hỗ trợ 24/7</h3>
+                        <p class="mb-4">Đội ngũ chuyên gia của chúng tôi luôn sẵn sàng hỗ trợ bạn mọi lúc, mọi nơi.</p>
+                        <button class="bg-white text-pink-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                            Chat ngay
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="text-3xl">🧮</div>
+                        <h3 class="text-xl font-bold">MathLearn</h3>
+                    </div>
+                    <p class="text-gray-400">Nền tảng học toán thông minh với công nghệ AI tiên tiến</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Tính năng</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Học bài</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Kho đề thi</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Luyện tập</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Hỏi AI</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Hỗ trợ</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Trung tâm trợ giúp</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Hướng dẫn sử dụng</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">FAQ</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Liên hệ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Kết nối</h4>
+                    <div class="flex space-x-4 mb-4">
+                        <a href="#" class="text-2xl hover:text-blue-400 transition-colors">📘</a>
+                        <a href="#" class="text-2xl hover:text-pink-400 transition-colors">📷</a>
+                        <a href="#" class="text-2xl hover:text-blue-300 transition-colors">🐦</a>
+                        <a href="#" class="text-2xl hover:text-red-400 transition-colors">📺</a>
+                    </div>
+                    <p class="text-gray-400 text-sm">Đăng ký nhận thông tin mới nhất</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 MathLearn. Tất cả quyền được bảo lưu.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation functionality
+        function showSection(sectionName) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionName).classList.add('active');
+            
+            // Update navigation active state
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.classList.remove('active-nav');
+            });
+            
+            // Update desktop nav
+            document.getElementById('nav-' + sectionName).classList.add('active-nav');
+            
+            // Update mobile nav
+            const mobileNavItems = document.querySelectorAll('[id^="mobile-nav-"]');
+            mobileNavItems.forEach(item => {
+                item.classList.remove('active-nav');
+            });
+            document.getElementById('mobile-nav-' + sectionName).classList.add('active-nav');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Lesson content functionality
+        function showLessonContent(contentType) {
+            // Show lesson content container
+            document.getElementById('lesson-content').style.display = 'block';
+            
+            // Hide all lesson content items
+            const contentItems = document.querySelectorAll('.lesson-content-item');
+            contentItems.forEach(item => {
+                item.style.display = 'none';
+            });
+            
+            // Show selected content
+            document.getElementById(contentType + '-content').style.display = 'block';
+            
+            // Scroll to content
+            document.getElementById('lesson-content').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Exam category functionality
+        function showExamCategory(category) {
+            // Hide all exam categories
+            const categories = document.querySelectorAll('.exam-category');
+            categories.forEach(cat => {
+                cat.style.display = 'none';
+                cat.classList.remove('active');
+            });
+            
+            // Show selected category
+            document.getElementById(category + '-exams').style.display = 'block';
+            document.getElementById(category + '-exams').classList.add('active');
+            
+            // Update button styles
+            const buttons = document.querySelectorAll('.exam-category-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-blue-600', 'bg-green-600', 'bg-purple-600', 'bg-red-600', 'bg-orange-600');
+                btn.classList.add('bg-blue-500', 'bg-green-500', 'bg-purple-500', 'bg-red-500', 'bg-orange-500');
+            });
+            
+            // Highlight active button
+            event.target.classList.remove('bg-blue-500', 'bg-green-500', 'bg-purple-500', 'bg-red-500', 'bg-orange-500');
+            if (category === 'topic1') event.target.classList.add('bg-blue-600');
+            if (category === 'topic2') event.target.classList.add('bg-green-600');
+            if (category === 'topic3') event.target.classList.add('bg-purple-600');
+            if (category === 'topic4') event.target.classList.add('bg-red-600');
+            if (category === 'review') event.target.classList.add('bg-orange-600');
+        }
+
+        // Practice topic functionality
+        function showPracticeDetail(topic) {
+            const topics = {
+                'topic1': {
+                    name: 'Hàm Số',
+                    questions: [
+                        {
+                            question: 'Tìm tập xác định của hàm số y = √(x - 2)',
+                            answers: ['A. [2; +∞)', 'B. (2; +∞)', 'C. (-∞; 2]', 'D. ℝ'],
+                            correct: 0
+                        },
+                        {
+                            question: 'Hàm số y = 2x + 3 có tính chất gì?',
+                            answers: ['A. Đồng biến trên ℝ', 'B. Nghịch biến trên ℝ', 'C. Không đơn điệu', 'D. Hàm chẵn'],
+                            correct: 0
+                        }
+                    ]
+                },
+                'topic2': {
+                    name: 'Hàm Số Bậc Hai',
+                    questions: [
+                        {
+                            question: 'Tìm tọa độ đỉnh của parabol y = x² - 4x + 3',
+                            answers: ['A. (2; -1)', 'B. (-2; 1)', 'C. (2; 1)', 'D. (-2; -1)'],
+                            correct: 0
+                        },
+                        {
+                            question: 'Hàm số y = -x² + 2x + 1 có giá trị lớn nhất là:',
+                            answers: ['A. 1', 'B. 2', 'C. 3', 'D. 4'],
+                            correct: 1
+                        }
+                    ]
+                },
+                'topic3': {
+                    name: 'Dấu Tam Thức Bậc Hai',
+                    questions: [
+                        {
+                            question: 'Cho f(x) = x² - 5x + 6. Khi nào f(x) > 0?',
+                            answers: ['A. x ∈ (2; 3)', 'B. x ∈ (-∞; 2) ∪ (3; +∞)', 'C. x ∈ [2; 3]', 'D. x ∈ ℝ'],
+                            correct: 1
+                        },
+                        {
+                            question: 'Giải bất phương trình x² - 4x + 3 ≤ 0',
+                            answers: ['A. [1; 3]', 'B. (-∞; 1] ∪ [3; +∞)', 'C. (1; 3)', 'D. ∅'],
+                            correct: 0
+                        }
+                    ]
+                },
+                'topic4': {
+                    name: 'PT Quy Về PT Bậc Hai',
+                    questions: [
+                        {
+                            question: 'Giải phương trình x⁴ - 5x² + 4 = 0',
+                            answers: ['A. x = ±1, ±2', 'B. x = ±1, ±3', 'C. x = ±2, ±3', 'D. Vô nghiệm'],
+                            correct: 0
+                        },
+                        {
+                            question: 'Giải phương trình √(x + 1) = x - 1',
+                            answers: ['A. x = 3', 'B. x = 0', 'C. x = 3, x = 0', 'D. Vô nghiệm'],
+                            correct: 0
+                        }
+                    ]
+                }
+            };
+            
+            const selectedTopic = topics[topic];
+            const randomQuestion = selectedTopic.questions[Math.floor(Math.random() * selectedTopic.questions.length)];
+            
+            // Update practice content
+            const practiceContent = document.getElementById('practice-content');
+            practiceContent.innerHTML = `
+                <h3 class="text-2xl font-bold text-center mb-6">Luyện Tập: ${selectedTopic.name}</h3>
+                <div class="max-w-4xl mx-auto">
+                    <div class="bg-gradient-to-r from-blue-100 to-purple-100 rounded-xl p-6 mb-6">
+                        <h4 class="text-lg font-bold text-center mb-4">Câu hỏi:</h4>
+                        <div class="bg-white p-4 rounded-lg mb-4 text-sm leading-relaxed">
+                            <p class="mb-3">${randomQuestion.question}</p>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            ${randomQuestion.answers.map((answer, index) => 
+                                `<button class="bg-white px-4 py-3 rounded-lg shadow hover:shadow-lg transition-shadow practice-btn" onclick="checkPracticeAnswer(${index}, ${randomQuestion.correct})">${answer}</button>`
+                            ).join('')}
+                        </div>
+                        <div id="practice-result" class="text-center text-lg font-semibold"></div>
+                    </div>
+                    <div class="text-center">
+                        <button class="bg-pink-200 text-pink-700 px-6 py-3 rounded-lg hover:bg-pink-300 transition-colors mr-4" onclick="showPracticeDetail('${topic}')">
+                            Câu hỏi mới
+                        </button>
+                        <button class="bg-gray-200 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-300 transition-colors" onclick="backToPracticeTopics()">
+                            Chọn chủ đề khác
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function checkPracticeAnswer(selected, correct) {
+            const resultDiv = document.getElementById('practice-result');
+            const buttons = document.querySelectorAll('.practice-btn');
+            
+            // Disable all buttons
+            buttons.forEach((btn, index) => {
+                btn.disabled = true;
+                if (index === correct) {
+                    btn.classList.add('bg-green-500', 'text-white');
+                } else if (index === selected && selected !== correct) {
+                    btn.classList.add('bg-red-500', 'text-white');
+                }
+            });
+            
+            if (selected === correct) {
+                resultDiv.innerHTML = '🎉 Chính xác! Tuyệt vời!<br><small class="text-green-600">Bạn đã nắm vững kiến thức này!</small>';
+                resultDiv.className = 'text-center text-lg font-semibold text-green-600';
+                showCelebration();
+            } else {
+                resultDiv.innerHTML = '❌ Chưa đúng. Đáp án đúng đã được tô xanh.<br><small class="text-red-600">Hãy ôn lại lý thuyết để hiểu rõ hơn.</small>';
+                resultDiv.className = 'text-center text-lg font-semibold text-red-600';
+            }
+        }
+
+        function backToPracticeTopics() {
+            const practiceContent = document.getElementById('practice-content');
+            practiceContent.innerHTML = `
+                <h3 class="text-2xl font-bold text-center mb-6">Thử Sức Ngay</h3>
+                <div class="max-w-4xl mx-auto">
+                    <div class="bg-gradient-to-r from-blue-100 to-purple-100 rounded-xl p-6 mb-6">
+                        <h4 class="text-lg font-bold text-center mb-4">Bài toán:</h4>
+                        <div class="bg-white p-4 rounded-lg mb-4 text-sm leading-relaxed">
+                            <p class="mb-3">Một người nuôi cá thí nghiệm trong hồ. Người đó thấy rằng nếu mỗi đơn vị diện tích của mặt hồ có <strong>n</strong> con cá thì trung bình mỗi con cá sau một vụ cân nặng <strong>P(n) = 480 - 20n</strong> (gam).</p>
+                            <p class="mb-3">Hỏi phải thả bao nhiêu cá trên một đơn vị diện tích của mặt hồ để sau một vụ thu hoạch được nhiều cá nhất biết mỗi đơn vị diện tích mặt hồ không được thả quá 23 con cá?</p>
+                        </div>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                            <button class="bg-white px-4 py-3 rounded-lg shadow hover:shadow-lg transition-shadow practice-btn" onclick="checkFishAnswer(10)">A. 10</button>
+                            <button class="bg-white px-4 py-3 rounded-lg shadow hover:shadow-lg transition-shadow practice-btn" onclick="checkFishAnswer(12)">B. 12</button>
+                            <button class="bg-white px-4 py-3 rounded-lg shadow hover:shadow-lg transition-shadow practice-btn" onclick="checkFishAnswer(14)">C. 14</button>
+                            <button class="bg-white px-4 py-3 rounded-lg shadow hover:shadow-lg transition-shadow practice-btn" onclick="checkFishAnswer(16)">D. 16</button>
+                        </div>
+                        <div id="practice-result" class="text-center text-lg font-semibold"></div>
+                    </div>
+                    <div class="text-center">
+                        <button class="bg-pink-200 text-pink-700 px-6 py-3 rounded-lg hover:bg-pink-300 transition-colors" onclick="newPracticeQuestion()">
+                            Câu hỏi mới
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Practice functionality with enhanced features
+        let currentQuestionIndex = 3;
+        let totalQuestions = 10;
+        let correctAnswers = 2;
+        let timer = null;
+        let timeLeft = 225; // 3:45 in seconds
+
+        function checkFishAnswer(answer) {
+            const resultDiv = document.getElementById('practice-result');
+            const buttons = document.querySelectorAll('.practice-btn');
+            
+            // Stop timer
+            if (timer) {
+                clearInterval(timer);
+            }
+            
+            // Reset all buttons
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-green-500', 'bg-red-500', 'text-white');
+                btn.classList.add('bg-white');
+                btn.disabled = true;
+            });
+            
+            if (answer === 12) {
+                correctAnswers++;
+                resultDiv.innerHTML = '🎉 Chính xác! Đáp án B. 12<br><small class="text-green-600">+10 điểm! Bạn đã hiểu rõ về bài toán tối ưu hóa.</small>';
+                resultDiv.className = 'text-center text-lg font-semibold text-green-600';
+                event.target.classList.remove('bg-white');
+                event.target.classList.add('bg-green-500', 'text-white');
+                
+                // Show celebration animation
+                showCelebration();
+            } else {
+                resultDiv.innerHTML = '❌ Chưa đúng. Hãy thử lại!<br><small class="text-red-600">Gợi ý: Sử dụng đạo hàm để tìm cực trị của hàm f(n) = n(480-20n)</small>';
+                resultDiv.className = 'text-center text-lg font-semibold text-red-600';
+                event.target.classList.remove('bg-white');
+                event.target.classList.add('bg-red-500', 'text-white');
+            }
+            
+            // Update progress
+            updateProgress();
+        }
+
+        function showCelebration() {
+            // Simple celebration effect
+            const celebration = document.createElement('div');
+            celebration.innerHTML = '🎉✨🎊';
+            celebration.className = 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-6xl z-50 animate-bounce';
+            document.body.appendChild(celebration);
+            
+            setTimeout(() => {
+                document.body.removeChild(celebration);
+            }, 2000);
+        }
+
+        function updateProgress() {
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            const percentage = (currentQuestionIndex / totalQuestions) * 100;
+            
+            progressBar.style.width = percentage + '%';
+            progressText.textContent = `${currentQuestionIndex}/${totalQuestions} câu`;
+        }
+
+        function startTimer() {
+            const timerElement = document.querySelector('.bg-blue-200');
+            timer = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timerElement.textContent = `⏱️ ${minutes}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    // Auto submit or show timeout
+                    document.getElementById('practice-result').innerHTML = '⏰ Hết thời gian! Hãy thử câu tiếp theo.';
+                }
+            }, 1000);
+        }
+
+        function showHint() {
+            const hintDiv = document.createElement('div');
+            hintDiv.className = 'mt-4 bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-400';
+            hintDiv.innerHTML = `
+                <h5 class="font-bold text-yellow-800 mb-2">💡 Gợi ý:</h5>
+                <div class="text-sm text-yellow-700">
+                    <p>• Tổng khối lượng cá = (số lượng cá) × (khối lượng mỗi con)</p>
+                    <p>• Đặt f(n) = n × P(n) = n(480 - 20n)</p>
+                    <p>• Tìm giá trị n để f(n) đạt cực đại bằng cách tính đạo hàm</p>
+                </div>
+            `;
+            
+            const questionDiv = document.getElementById('current-question');
+            const existingHint = questionDiv.querySelector('.bg-yellow-50');
+            if (existingHint) {
+                existingHint.remove();
+            }
+            questionDiv.appendChild(hintDiv);
+        }
+
+        function showSolution() {
+            const solutionDiv = document.getElementById('solution-detail');
+            solutionDiv.style.display = 'block';
+            solutionDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function newPracticeQuestion() {
+            const questions = [
+                {
+                    id: 4,
+                    title: 'Hàm số bậc hai',
+                    difficulty: 'Trung bình',
+                    time: 180,
+                    question: 'Tìm giá trị nhỏ nhất của hàm số y = x² - 4x + 7',
+                    answers: ['A. 3', 'B. 4', 'C. 5', 'D. 6'],
+                    correct: 0,
+                    explanation: {
+                        steps: [
+                            'Hàm số y = x² - 4x + 7 là hàm bậc hai với a = 1 > 0',
+                            'Tọa độ đỉnh: x = -b/2a = 4/2 = 2',
+                            'Giá trị nhỏ nhất: y = 2² - 4(2) + 7 = 4 - 8 + 7 = 3',
+                            'Vậy giá trị nhỏ nhất của hàm số là 3'
+                        ]
+                    }
+                },
+                {
+                    id: 5,
+                    title: 'Phương trình bậc hai',
+                    difficulty: 'Dễ',
+                    time: 120,
+                    question: 'Giải phương trình x² - 7x + 12 = 0',
+                    answers: ['A. x = 3, x = 4', 'B. x = 2, x = 6', 'C. x = 1, x = 12', 'D. x = 3, x = 5'],
+                    correct: 0,
+                    explanation: {
+                        steps: [
+                            'Phương trình: x² - 7x + 12 = 0',
+                            'Tính Δ = b² - 4ac = 49 - 48 = 1 > 0',
+                            'x₁ = (7 + 1)/2 = 4, x₂ = (7 - 1)/2 = 3',
+                            'Vậy nghiệm của phương trình là x = 3 và x = 4'
+                        ]
+                    }
+                },
+                {
+                    id: 6,
+                    title: 'Tam thức bậc hai',
+                    difficulty: 'Khó',
+                    time: 240,
+                    question: 'Tìm m để tam thức f(x) = x² - 2mx + m² - 1 luôn dương',
+                    answers: ['A. m ∈ ∅', 'B. m ∈ ℝ', 'C. m > 1', 'D. m < -1'],
+                    correct: 0,
+                    explanation: {
+                        steps: [
+                            'Để f(x) > 0 với mọi x, cần a > 0 và Δ < 0',
+                            'Ta có a = 1 > 0 (thỏa mãn)',
+                            'Δ = (2m)² - 4(m² - 1) = 4m² - 4m² + 4 = 4 > 0',
+                            'Vì Δ = 4 > 0 nên không tồn tại m để f(x) luôn dương'
+                        ]
+                    }
+                }
+            ];
+            
+            const randomQ = questions[Math.floor(Math.random() * questions.length)];
+            currentQuestionIndex++;
+            timeLeft = randomQ.time;
+            
+            // Update question display
+            const questionDiv = document.getElementById('current-question');
+            questionDiv.innerHTML = `
+                <div class="flex justify-between items-center mb-4">
+                    <h4 class="text-lg font-bold">Câu ${currentQuestionIndex}: ${randomQ.title}</h4>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-sm ${randomQ.difficulty === 'Dễ' ? 'bg-green-200 text-green-800' : randomQ.difficulty === 'Trung bình' ? 'bg-yellow-200 text-yellow-800' : 'bg-red-200 text-red-800'} px-2 py-1 rounded">⭐ ${randomQ.difficulty}</span>
+                        <span class="text-sm bg-blue-200 text-blue-800 px-2 py-1 rounded timer-display">⏱️ ${Math.floor(timeLeft/60)}:${(timeLeft%60).toString().padStart(2,'0')}</span>
+                    </div>
+                </div>
+                <div class="bg-white p-4 rounded-lg mb-4 text-sm">
+                    <p class="mb-3">${randomQ.question}</p>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                    ${randomQ.answers.map((answer, index) => 
+                        `<button class="bg-white px-4 py-3 rounded-lg shadow hover:shadow-lg transition-shadow practice-btn" onclick="checkAdvancedAnswer(${index}, ${randomQ.correct}, ${randomQ.id})">${answer}</button>`
+                    ).join('')}
+                </div>
+                <div id="practice-result" class="text-center text-lg font-semibold"></div>
+                <div id="solution-detail" class="mt-4 bg-green-50 p-4 rounded-lg" style="display: none;">
+                    <h5 class="font-bold text-green-800 mb-2">💡 Lời giải chi tiết:</h5>
+                    <div class="text-sm text-green-700 space-y-2">
+                        ${randomQ.explanation.steps.map((step, index) => 
+                            `<p><strong>Bước ${index + 1}:</strong> ${step}</p>`
+                        ).join('')}
+                    </div>
+                </div>
+            `;
+            
+            // Clear any existing hints
+            const existingHint = questionDiv.querySelector('.bg-yellow-50');
+            if (existingHint) {
+                existingHint.remove();
+            }
+            
+            // Update progress
+            updateProgress();
+            
+            // Start new timer
+            startTimer();
+        }
+
+        function checkAdvancedAnswer(selected, correct, questionId) {
+            const resultDiv = document.getElementById('practice-result');
+            const buttons = document.querySelectorAll('.practice-btn');
+            
+            // Stop timer
+            if (timer) {
+                clearInterval(timer);
+            }
+            
+            // Disable all buttons
+            buttons.forEach((btn, index) => {
+                btn.disabled = true;
+                if (index === correct) {
+                    btn.classList.add('bg-green-500', 'text-white');
+                } else if (index === selected && selected !== correct) {
+                    btn.classList.add('bg-red-500', 'text-white');
+                }
+            });
+            
+            if (selected === correct) {
+                correctAnswers++;
+                resultDiv.innerHTML = '🎉 Chính xác! Tuyệt vời!<br><small class="text-green-600">+15 điểm! Bạn đang tiến bộ rất tốt.</small>';
+                resultDiv.className = 'text-center text-lg font-semibold text-green-600';
+                showCelebration();
+            } else {
+                resultDiv.innerHTML = '❌ Chưa đúng. Đáp án đúng đã được tô xanh.<br><small class="text-red-600">Hãy xem lời giải để hiểu rõ hơn.</small>';
+                resultDiv.className = 'text-center text-lg font-semibold text-red-600';
+            }
+            
+            // Update statistics
+            updateStatistics();
+        }
+
+        function updateStatistics() {
+            const accuracy = Math.round((correctAnswers / currentQuestionIndex) * 100);
+            document.querySelector('.text-green-600').textContent = accuracy + '%';
+            document.querySelector('.text-blue-600').textContent = currentQuestionIndex;
+        }
+
+        function checkNewAnswer(answer, correct) {
+            const resultDiv = document.getElementById('practice-result');
+            const buttons = document.querySelectorAll('.practice-btn');
+            
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-green-500', 'bg-red-500', 'text-white');
+                btn.classList.add('bg-white');
+            });
+            
+            if (answer === correct) {
+                resultDiv.innerHTML = '🎉 Chính xác! Tuyệt vời!';
+                resultDiv.className = 'text-center text-lg font-semibold text-green-600';
+                event.target.classList.remove('bg-white');
+                event.target.classList.add('bg-green-500', 'text-white');
+            } else {
+                resultDiv.innerHTML = '❌ Chưa đúng, hãy thử lại!';
+                resultDiv.className = 'text-center text-lg font-semibold text-red-600';
+                event.target.classList.remove('bg-white');
+                event.target.classList.add('bg-red-500', 'text-white');
+            }
+        }
+
+        // AI Chat functionality
+        function sendAIMessage() {
+            const input = document.getElementById('ai-input');
+            const message = input.value.trim();
+            
+            if (message) {
+                addChatMessage(message, 'user');
+                input.value = '';
+                
+                // Simulate AI response
+                setTimeout(() => {
+                    const responses = [
+                        'Đây là một câu hỏi hay! Để giải quyết vấn đề này, chúng ta cần...',
+                        'Tôi hiểu câu hỏi của bạn. Hãy cùng phân tích từng bước...',
+                        'Đó là một khái niệm quan trọng trong toán học. Để giải thích...',
+                        'Câu hỏi rất thú vị! Chúng ta có thể tiếp cận theo nhiều cách...'
+                    ];
+                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                    addChatMessage(randomResponse, 'ai');
+                }, 1000);
+            }
+        }
+
+        function addChatMessage(message, sender) {
+            const chatMessages = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = sender === 'user' ? 'mb-4 text-right' : 'mb-4';
+            
+            const messageContent = document.createElement('div');
+            messageContent.className = sender === 'user' 
+                ? 'bg-gray-300 text-gray-800 p-3 rounded-lg inline-block max-w-xs'
+                : 'bg-pink-200 text-pink-800 p-3 rounded-lg inline-block max-w-md';
+            messageContent.textContent = message;
+            
+            messageDiv.appendChild(messageContent);
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function askQuickQuestion(question) {
+            document.getElementById('ai-input').value = question;
+            sendAIMessage();
+        }
+
+        // Enter key support for AI chat
+        document.getElementById('ai-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendAIMessage();
+            }
+        });
+
+        // Form submission (demo)
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Cảm ơn bạn đã gửi tin nhắn! Chúng tôi sẽ phản hồi trong thời gian sớm nhất.');
+        });
+
+        // Theory detail functionality
+        function showTheoryDetail(chapter) {
+            // Hide theory topics grid
+            document.getElementById('theory-topics').style.display = 'none';
+            
+            // Show theory detail container
+            document.getElementById('theory-detail').style.display = 'block';
+            
+            // Hide all chapter details
+            const allDetails = document.querySelectorAll('.theory-detail-content');
+            allDetails.forEach(detail => {
+                detail.style.display = 'none';
+            });
+            
+            // Show selected chapter detail
+            document.getElementById(chapter + '-detail').style.display = 'block';
+            
+            // Scroll to top of content
+            document.getElementById('lesson-content').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function backToTheoryTopics() {
+            // Hide theory detail container
+            document.getElementById('theory-detail').style.display = 'none';
+            
+            // Show theory topics grid
+            document.getElementById('theory-topics').style.display = 'grid';
+            
+            // Scroll to top of content
+            document.getElementById('lesson-content').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Mindmap functionality
+        function showMindmapDetail(topic) {
+            // Hide mindmap topics grid
+            const topicsGrid = document.querySelector('#mindmap-content .grid');
+            topicsGrid.style.display = 'none';
+            
+            // Show mindmap detail container
+            document.getElementById('mindmap-detail').style.display = 'block';
+            
+            // Hide all mindmap details
+            const allDetails = document.querySelectorAll('.mindmap-detail-content');
+            allDetails.forEach(detail => {
+                detail.style.display = 'none';
+            });
+            
+            // Show selected mindmap detail
+            document.getElementById(topic + '-mindmap').style.display = 'block';
+            
+            // Scroll to top of content
+            document.getElementById('lesson-content').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function backToMindmapTopics() {
+            // Hide mindmap detail container
+            document.getElementById('mindmap-detail').style.display = 'none';
+            
+            // Show mindmap topics grid
+            const topicsGrid = document.querySelector('#mindmap-content .grid');
+            topicsGrid.style.display = 'grid';
+            
+            // Scroll to top of content
+            document.getElementById('lesson-content').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Video category functionality
+        function showVideoCategory(category) {
+            // Hide all video categories
+            const categories = document.querySelectorAll('.video-category');
+            categories.forEach(cat => {
+                cat.style.display = 'none';
+                cat.classList.remove('active');
+            });
+            
+            // Show selected category
+            document.getElementById(category + '-videos').style.display = 'block';
+            document.getElementById(category + '-videos').classList.add('active');
+            
+            // Update button styles
+            const buttons = document.querySelectorAll('.video-category-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-blue-600', 'bg-green-600', 'bg-purple-600', 'bg-red-600');
+                btn.classList.add('bg-blue-500', 'bg-green-500', 'bg-purple-500', 'bg-red-500');
+            });
+            
+            // Highlight active button
+            event.target.classList.remove('bg-blue-500', 'bg-green-500', 'bg-purple-500', 'bg-red-500');
+            if (category === 'topic1') event.target.classList.add('bg-blue-600');
+            if (category === 'topic2') event.target.classList.add('bg-green-600');
+            if (category === 'topic3') event.target.classList.add('bg-purple-600');
+            if (category === 'topic4') event.target.classList.add('bg-red-600');
+        }
+
+        // Initialize default categories
+        document.addEventListener('DOMContentLoaded', function() {
+            showExamCategory('topic1');
+            showVideoCategory('topic1');
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96ed7dfb223809c4',t:'MTc1NTE0MzQ2OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
